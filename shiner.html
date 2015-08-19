@@ -3,12 +3,123 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
+  
+
+{{>bodyCont}}
+  
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+
+
+<template name="bodyCont">
+  <div class="ui vertical inverted sidebar menu visible" id="toc">
+    <a class="item">Menu</a>
+  {{> listTemplates}} 
+  <button class="item circular ui icon button blue" id="addTT">
+  <i class="icon ellipsis horizontal"></i> <i class="icon plus"></i>
+</button>
+</div>
+ 
+  
+  <div class="pusher">
+
+
+
+<div class="ui vertical menu visible" id="secSide">
+  {{> visiTemplates}}
+</div>
+    <!-- Site content   ui vertical menu inverted sidebar visible
+pusher
+<div class="ui pointing vertical inverted menu">
+  <a class="item">
+    Site Title
+  </a>
+  <div class="item">
+    <b>Grouped Section</b>
+    <div class="menu">
+      <a class="item">Subsection 1</a>
+      <a class="active item">Subsection 1</a>
+      <a class="item">Subsection 1</a>
+      <div class="item">
+        <b>Grouped Section</b>
+        <div class="menu">
+          <a class="item">Subsection 1</a>
+          <a class="active item">Subsection 1</a>
+          <a class="item">Subsection 1</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+  {{> insertTemplateForm}}
+
+  {{> insertStageForm}}
+
+  {{> insertContainerForm}}
+
+  {{> insertInstanceForm}}
+
+  <div class="ui button">Neutral</div>
+-->
+<div id="stage">
+
+{{> Contain}}
+
+
+
+<button class="circular ui icon button" id="addCont">
+  <i class="icon plus"></i>
+</button>
+
+<button class="circular ui icon button" id="addContP">
+  <i class="icon plus"></i> <i class="icon ellipsis horizontal"></i>
+</button>
+
+<br>
+
+
+<div class="ui container">
+ 
+</div>
+
+  <div id="model-container" style="position:fixed;top:0px;right:200px;"></div>
+</div>
+</div>
+
+
+<div class="ui modal" id="modal">
+  <div class="header">Header</div>
+  <div class="content">
+    <p>
+      {{> insertTemplateForm}}
+    </p>
+  </div>
+  <div class="actions">
+    <div class="ui approve button">Done</div>
+    
+    <div class="ui cancel button">Cancel</div>
+  </div>
+</div>
+
 </template>
+<!-- body -->
+
+
+<template name="Contain">
+
+
+{{#each containers}}
+  <div id="{{_id}}" class="dropzone"><legend>{{name}}</legend>
+  {{#each this.instances}}
+    {{{content}}}
+  {{/each}}
+</div>
+{{/each}}
+
+</template>
+

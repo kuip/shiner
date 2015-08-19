@@ -7,3 +7,12 @@
 meteor-platform
 autopublish
 insecure
+mpowaga:string-template
+cfs:gridfs
+aldeed:collection2
+aldeed:autoform
+flemay:semantic-ui
+flemay:less-autoprefixer
+polguixe:meteor-datgui
+fabienb4:autoform-semantic-ui
+ryanswapp:interactjs

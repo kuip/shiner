@@ -68,12 +68,12 @@ Template.bodyCont.helpers({
   },
   source: function(){
     var out ="";
-    var cont = Containers.find({app: "app 1"}).fetch();
+    var cont = Containers.find({app: "app 1"},{sort:{ordering:1}}).fetch();
     var instances,design,data;
 
     cont.forEach(function(contain){
       out = out+'\n\n<template name="'+contain.name+'">';
-      instances = Instances.find({container: contain._id}).fetch();
+      instances = Instances.find({container: contain._id},{sort:{ordering:1}}).fetch();
       instances.forEach(function(ins){
         out = out+"\n"+ins.content;
       })
@@ -83,13 +83,13 @@ Template.bodyCont.helpers({
   },
   html_out: function(){
     var out ="",templIn="";
-    var cont = Containers.find({app: "app 1"}).fetch();
+    var cont = Containers.find({app: "app 1"},{sort:{ordering:1}}).fetch();
     var instances;
 
     cont.forEach(function(contain){
       //out = out+'\n\n<template name="'+contain.name+'">';
       templIn = templIn+"\n{{> "+ contain.name+"}} ";
-      instances = Instances.find({container: contain._id}).fetch();
+      instances = Instances.find({container: contain._id},{sort:{ordering:1}}).fetch();
       instances.forEach(function(ins){
         out = out+"\n"+ins.content;
       })
@@ -132,13 +132,14 @@ Template.bodyCont.events({
   },
   "click .upT":function(ev, inst){
     //alert("source")
-    alert("upT")
+    var templId = ev.target.id.substring(2)
+    Meteor.call("moveContainer" , templId, 2)
   },
   "click .downT":function(ev, inst){
     //alert("source")
     
     var templId = ev.target.id.substring(2)
-    console.log(ev.target)
+    Meteor.call("moveContainer" , templId, -2)
     //alert(templId)
 
   },
@@ -167,19 +168,17 @@ Template.bodyCont.events({
 
   },
   "click .upI":function(ev, inst){
-    alert("upI")
+    //alert("upI")
     
     var templId = ev.target.id.substring(2)
-    console.log(ev.target)
-    alert("downI")
+    console.log(templId)
+    Meteor.call("moveInstance" , templId, 2)
 
   },
   "click .downI":function(ev, inst){
-    //alert("source")
-    
     var templId = ev.target.id.substring(2)
     console.log(ev.target)
-    //alert(templId)
+    Meteor.call("moveInstance" , templId, -2)
 
   },
   "click #preview":function(ev, inst){
@@ -203,10 +202,10 @@ Template.Contain.helpers({
 
   containers: function(){
     //return Templates.find({}).fetch()
-    var instances,design={},data={}, cont = Containers.find({app: "app 1"}).fetch();
+    var instances,design={},data={}, cont = Containers.find({app: "app 1"},{sort:{ordering:1}}).fetch();
     cont.forEach(function(contain){
       contain.instances=[];
-      instances =Instances.find({container: contain._id}).fetch();
+      instances =Instances.find({container: contain._id},{sort:{ordering:1}}).fetch();
       instances.forEach(function(ins){
         for (i in ins.design) {
           design[ins.design[i].name] = ins.design[i].value  // "design."+ins.design[i].name  //

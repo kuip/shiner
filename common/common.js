@@ -214,10 +214,10 @@ Meteor.methods({
     moveContainer: function(id,by){
         var next;
         var cont = Containers.findOne(id)
-        if (by <0){
-            next = Containers.find({ordering: {$lt: cont.ordering}},{limit:1}).fetch()
+        if (by > 0){
+            next = Containers.find({ordering: {$lt: cont.ordering}},{limit:1},{sort:{ordering:-1}}).fetch()[0]
         }else{
-            next = Containers.find({ordering: {$gt: cont.ordering}},{limit:1}).fetch()
+            next = Containers.find({ordering: {$gt: cont.ordering}},{limit:1},{sort:{ordering:1}}).fetch()[0]
         }
         var ord = next.ordering
         Containers.update({_id:next._id},{$set:{ordering:cont.ordering}})
@@ -246,13 +246,16 @@ Meteor.methods({
         Instances.update({_id:id},{$set:obj})
     },
     moveInstance: function(id,by){
+        console.log(id)
         var next;
         var cont = Instances.findOne(id)
-        if (by <0){
-            next = Instances.find({ordering: {$lt: cont.ordering}},{limit:1}).fetch()
+        console.log(cont)
+        if (by > 0){
+            next = Instances.find({ordering: {$lt: cont.ordering}},{limit:1},{sort:{ordering:-1}}).fetch()[0]
         }else{
-            next = Instances.find({ordering: {$gt: cont.ordering}},{limit:1}).fetch()
+            next = Instances.find({ordering: {$gt: cont.ordering}},{limit:1},{sort:{ordering:1}}).fetch()[0]
         }
+        console.log(next)
         var ord = next.ordering
         Instances.update({_id:next._id},{$set:{ordering:cont.ordering}})
         Instances.update({_id:cont._id},{$set:{ordering:ord}})

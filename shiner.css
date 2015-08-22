@@ -27,29 +27,34 @@ html,body {
 
 
 .dropzone {
+  position: relative;
   background-color: #ccc;
   border: dashed 4px transparent;
   border-radius: 4px;
   margin: 10px auto 30px;
   padding: 10px;
   width: 100%;
-  height: 80px;
+  min-height: 80px;
   transition: background-color 0.3s;
   border: 1px solid #c0c0c0;
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
 }
+.dropzone legend{
+  top: -8px;
+  left: -5;
+}
 
 .drop-active {
   border-color: #aaa;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .drop-target {
   background-color: #29e;
   border-color: #fff;
   border-style: solid;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .drag-drop {
@@ -70,15 +75,56 @@ html,body {
 .drag-drop.can-drop {
   color: #000;
   background-color: #4e4;
-  z-index: 9999;
+  z-index: 999;
 }
 
+.delT, .upT, .downT {
+  position: absolute;
+  right: -25px;
+}
+.delT {
+  bottom: 26px;
+}
+.upT {
+  top: 0px;
+}
+.downT {
+  bottom: -0px;
+}
+
+.delI, .upI, .downI, .optI {
+  position: absolute;
+  top: -15px;
+  z-index: 1999;
+}
+.delI {
+  right: -5px;
+  top: 25px;
+}
+.optI {
+  left: -5px;
+  top: 25px;
+}
+.upI {
+  left: -5px;
+}
+.downI {
+  right: -6px;
+}
+
+
+.editable {
+  position: relative;
+  display: inline-block;
+  padding: 0.3em 0.3em;
+  background:rgba(100,100,100,0.2);
+}
 
 #secSide {
 	position: fixed;
 	top: 0px;
 	left: 200px;
-	z-index: 9999;
+	z-index: 999;
 
 }
 

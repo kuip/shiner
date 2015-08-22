@@ -32,8 +32,8 @@ Schemas.Template = new SimpleSchema({
     name: {
         type: String,
         label: "Name",
-        index: true,
-        unique: true,
+        index: false,
+        unique: false,
         max: 200
     },
     content: {
@@ -89,6 +89,12 @@ Schemas.Instance = new SimpleSchema({
         label: "Container",
         max: 40
     },
+    ordering: {
+        type: Number,
+        label: "Ordering",
+        max:100,
+        optional:true
+    },
     templateId:{
         type: String,
         label: "Template",
@@ -97,22 +103,26 @@ Schemas.Instance = new SimpleSchema({
     top:{
         type: String,
         label: "Top",
-        max: 10
+        max: 10,
+        optional:true
     },
     left:{
         type: String,
         label: "Left",
-        max: 10
+        max: 10,
+        optional:true
     },
     bottom:{
         type: String,
         label: "Bottom",
-        max: 10
+        max: 10,
+        optional:true
     },
     right:{
         type: String,
         label: "Right",
-        max: 10
+        max: 10,
+        optional:true
     },
     design:{
         type: [Schemas.GUIopts],
@@ -136,6 +146,12 @@ Schemas.Container = new SimpleSchema({
         type: String,
         label: "Stage",
         max: 40
+    },
+    ordering: {
+        type: Number,
+        label: "Ordering",
+        max:100,
+        optional:true
     },
     app: {
         type: String,
@@ -188,12 +204,61 @@ Meteor.methods({
         Templates.insert(par)
     },
     insertContainer: function(par){
+        var appId = par.app
+        var insts  = Containers.find({app: appId}).count()
+        //alert(insts)
+
+        par.ordering = insts +1;
         Containers.insert(par)
     },
+    moveContainer: function(id,by){
+        var next;
+        var cont = Containers.findOne(id)
+        if (by <0){
+            next = Containers.find({ordering: {$lt: cont.ordering}},{limit:1}).fetch()
+        }else{
+            next = Containers.find({ordering: {$gt: cont.ordering}},{limit:1}).fetch()
+        }
+        var ord = next.ordering
+        Containers.update({_id:next._id},{$set:{ordering:cont.ordering}})
+        Containers.update({_id:cont._id},{$set:{ordering:ord}})
+    },
+    deleteContainer: function(id){
+        var insts = Instances.find({templateId: id}).fetch()
+        insts.forEach(function(inst){
+            Instances.remove(inst._id)
+        })
+        Containers.remove(id)
+    },
     insertInstance: function(par){
+        var templateId = par.container
+        var insts  = Instances.find({container: templateId}).count()
+        //alert(insts)
+
+        par.ordering = insts +1;
+        //console.log(par)
         Instances.insert(par)
     },
+    deleteInstance: function(id){
+        Instances.remove(id)
+    },
+    modInstance: function(id,obj){
+        Instances.update({_id:id},{$set:obj})
+    },
+    moveInstance: function(id,by){
+        var next;
+        var cont = Instances.findOne(id)
+        if (by <0){
+            next = Instances.find({ordering: {$lt: cont.ordering}},{limit:1}).fetch()
+        }else{
+            next = Instances.find({ordering: {$gt: cont.ordering}},{limit:1}).fetch()
+        }
+        var ord = next.ordering
+        Instances.update({_id:next._id},{$set:{ordering:cont.ordering}})
+        Instances.update({_id:cont._id},{$set:{ordering:ord}})
+    }
 
 })
+
 
 

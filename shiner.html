@@ -27,7 +27,9 @@
 
 
 <div class="ui vertical menu visible" id="secSide">
+  
   {{> visiTemplates}}
+  
 </div>
     <!-- Site content   ui vertical menu inverted sidebar visible
 pusher
@@ -80,6 +82,14 @@ pusher
   <i class="icon plus"></i> <i class="icon ellipsis horizontal"></i>
 </button>
 
+<button class="circular ui icon button" id="sourcem">
+  <i class="icon code "></i>
+</button>
+
+<button class="circular ui icon button" id="preview">
+  <i class="icon unhide"></i>
+</button>
+
 <br>
 
 
@@ -93,10 +103,16 @@ pusher
 
 
 <div class="ui modal" id="modal">
-  <div class="header">Header</div>
+  <div class="header"></div>
   <div class="content">
     <p>
+      {{#if tt}}
       {{> insertTemplateForm}}
+      {{else}}
+      {{> insertContainerForm}}
+      {{/if}}
+
+
     </p>
   </div>
   <div class="actions">
@@ -106,8 +122,47 @@ pusher
   </div>
 </div>
 
+
+
+<div class="ui modal" id="code">
+  <div class="header">Source</div>
+  <div class="content">
+    <div>
+      <textarea width="100%">
+        {{source}}
+      </textarea>
+
+
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui approve button">Done</div>
+    
+    <div class="ui cancel button">Cancel</div>
+  </div>
+</div>
+
+<div class="ui modal" id="preview_modal">
+  <div class="header">Preview</div>
+  <div class="content">
+    <div>
+
+        {{{html_out}}}
+     
+
+
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui cancel button">Cancel</div>
+  </div>
+</div>
+
 </template>
-<!-- body -->
+
+
+
+
 
 
 <template name="Contain">
@@ -115,9 +170,22 @@ pusher
 
 {{#each containers}}
   <div id="{{_id}}" class="dropzone"><legend>{{name}}</legend>
+    
   {{#each this.instances}}
-    {{{content}}}
+    <div class="editable" id="c_{{_id}}">
+    {{{compiled}}}
+  </div>
   {{/each}}
+    
+  <button class="item mini circular ui icon button upT">
+        <i class="icon small arrow up" id="u_{{_id}}"></i>
+      </button>
+  <button class="item mini circular ui icon button delT">
+        <i class="icon small minus" id="x_{{_id}}"></i>
+      </button>
+  <button class="item mini circular ui icon button downT">
+    <i class="icon small arrow down" id="d_{{_id}}"></i>
+  </button>
 </div>
 {{/each}}
 

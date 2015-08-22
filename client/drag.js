@@ -129,19 +129,21 @@ interact('.dropzone').dropzone({
   },
   ondrop: function (event) {
     //event.relatedTarget.textContent = 'Dropped';
-    console.log(event.target.id)
+    console.log(event.relatedTarget.id)
     
     //var target = event.target || event.srcElement;
     console.log(event.relatedTarget.innerHTML)
-    //var te = Templates.findOne(event.target.id)
+    var te = Templates.findOne(event.relatedTarget.id)
     Meteor.call("insertInstance" , 
       {"container" : event.target.id,
     "templateId" : event.relatedTarget.id,
-    "content" : event.relatedTarget.innerHTML, //te.content,
-    "top" : "0",
-    "left" : "0",
-    "bottom" : "35",
-    "right" : "26"
+    "content" : te.content, //te.content,
+    "design": te.design,
+    "data": te.data,
+    "top" : "",
+    "left" : "",
+    "bottom" : "",
+    "right" : ""
 }
     )
   },

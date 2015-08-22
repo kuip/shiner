@@ -16,28 +16,7 @@ Template.insertTemplateForm.onRendered(function(){
     //console.log(out)
     $("#ins").html(out)
 
-    var ctrl = {}
-    container = document.getElementById('model-container');
- var guiControls = new function() {
-     this.axial = 900;
-     this.coronal = 200;
-     this.sagittal = 400;
-     this.content = "ceva"
-     this.text = "cev"
- }
-
-    var datGUI = new dat.GUI({autoPlace:false});
-    var design = datGUI.addFolder("Design");
-    ctrl.axial = design.add(guiControls, 'axial', 0, 1701);
-    ctrl.coronal = design.add(guiControls, 'coronal', 0, 569);
-    ctrl.sagittal = design.add(guiControls, 'sagittal', 0, 999);
-    //design.show()
-    var data = datGUI.addFolder("Data");
-    ctrl.dat = design.add(guiControls, 'text', 0, 1701);
-    //data.show()
-    ctrl.content = dat.GUI.add(guiControls,"content")
-
-    container.appendChild(datGUI.domElement);
+    
 
 });
 
@@ -72,16 +51,142 @@ Template.insertTemplateForm.helpers({
   }
 })
 
+Template.bodyCont.onCreated(function(){
+  this.tt = new ReactiveVar(true)
+  console.log(this.tt)
+})
+
+/*
+Template.bodyCont.onRendered(function(){
+  this.tt = new ReactiveVar(true)
+})
+*/
+
+Template.bodyCont.helpers({
+  tt: function(){
+    return Template.instance().tt.get()
+  },
+  source: function(){
+    var out ="";
+    var cont = Containers.find({app: "app 1"}).fetch();
+    var instances,design,data;
+
+    cont.forEach(function(contain){
+      out = out+'\n\n<template name="'+contain.name+'">';
+      instances = Instances.find({container: contain._id}).fetch();
+      instances.forEach(function(ins){
+        out = out+"\n"+ins.content;
+      })
+      out = out+'</template> <!-- '+contain.name+' -->';
+    })
+    return out
+  },
+  html_out: function(){
+    var out ="",templIn="";
+    var cont = Containers.find({app: "app 1"}).fetch();
+    var instances;
+
+    cont.forEach(function(contain){
+      //out = out+'\n\n<template name="'+contain.name+'">';
+      templIn = templIn+"\n{{> "+ contain.name+"}} ";
+      instances = Instances.find({container: contain._id}).fetch();
+      instances.forEach(function(ins){
+        out = out+"\n"+ins.content;
+      })
+      //out = out+'</template> <!-- '+contain.name+' -->';
+    })
+    //out = templIn + out;
+    console.log(out)
+    return StringTemplate.compile(out, {design:[], data: []});
+
+  }
+})
+
 Template.bodyCont.events({
   "click #addTT": function(ev, inst){
     //alert("addTT")
     //Meteor.call("insertTemplate" , par)
+    console.log(inst.tt)
+    inst.tt.set(true)
     $("#modal").modal("show")
   },
   "click #addCont": function(ev, inst){
     //alert("addTT")
+    //inst.tt.set(false)
     Meteor.call("insertContainer" , {"name":"templ_"+makeid(3),"app":"app 1","stage":"st"})
   },
+  "click #addContP": function(ev, inst){
+    //alert("addTT")
+    inst.tt.set(false)
+    $("#modal").modal("show")
+  },
+  "click #sourcem":function(ev, inst){
+    //alert("source")
+    $("#code").modal("show")
+  },
+  "click .delT":function(ev, inst){
+    //alert("source")
+    
+    var templId = ev.target.id.substring(2)
+    Meteor.call("deleteContainer" , templId)
+  },
+  "click .upT":function(ev, inst){
+    //alert("source")
+    alert("upT")
+  },
+  "click .downT":function(ev, inst){
+    //alert("source")
+    
+    var templId = ev.target.id.substring(2)
+    console.log(ev.target)
+    //alert(templId)
+
+  },
+  "mouseenter .editable": function(ev, inst){
+    var div = $(ev.target)
+    console.log(div)
+    var id_part = div[0].id.substring(2)
+    div.append('<div class="ed"><button class="item mini circular ui icon button blue upI"><i class="icon small arrow left" id="u_'+id_part +'"></i></button><button class="item mini circular ui icon button blue optI"><i class="icon small options" id="o_'+id_part +'"></i></button><button class="item mini circular ui icon button red delI"><i class="icon small minus" id="x_'+id_part +'"></i></button><button class="item mini circular ui icon button blue downI"><i class="icon small arrow right" id="d_'+id_part +'"></i></button></div>')
+  },
+  "mouseleave .editable": function(ev, inst){
+    var div = ev.target
+    var node = $(".ed", div).remove()
+    //console.log(node)
+
+  },
+  "click .delI": function(ev, inst){
+    //alert("delI")
+    var templId = ev.target.id.substring(2)
+    Meteor.call("deleteInstance" , templId)
+  },
+  "click .optI":function(ev, inst){
+    //alert("source")
+    
+    do_options(ev.target.id.substring(2))
+    //alert(templId)
+
+  },
+  "click .upI":function(ev, inst){
+    alert("upI")
+    
+    var templId = ev.target.id.substring(2)
+    console.log(ev.target)
+    alert("downI")
+
+  },
+  "click .downI":function(ev, inst){
+    //alert("source")
+    
+    var templId = ev.target.id.substring(2)
+    console.log(ev.target)
+    //alert(templId)
+
+  },
+  "click #preview":function(ev, inst){
+    //alert("source")
+    $("#preview_modal").modal("show")
+  }
+
 })
 
 
@@ -98,9 +203,21 @@ Template.Contain.helpers({
 
   containers: function(){
     //return Templates.find({}).fetch()
-    var cont = Containers.find({app: "app 1"}).fetch();
+    var instances,design={},data={}, cont = Containers.find({app: "app 1"}).fetch();
     cont.forEach(function(contain){
-      contain.instances = Instances.find({container: contain._id}).fetch();
+      contain.instances=[];
+      instances =Instances.find({container: contain._id}).fetch();
+      instances.forEach(function(ins){
+        for (i in ins.design) {
+          design[ins.design[i].name] = ins.design[i].value  // "design."+ins.design[i].name  //
+        }
+        for (i in ins.data) {
+          data[ins.data[i].name] = ins.data[i].value  // "data."+ins.data[i].name //
+        }
+        ins.compiled = StringTemplate.compile(ins.content, {design:design, data: data})
+        contain.instances.push(ins);
+      })
+      
     })
     return cont
   }
@@ -114,6 +231,7 @@ Template.listTemplates.events({
     console.log(ev,inst)
     ev.stopPropagation();
     seeThem(ev.target.id)
+
     $('#secSide')
     .sidebar('show')
   }
@@ -182,6 +300,74 @@ function reform(objArray){
       })
       $("#listSee").html(out)
     }
+
+function do_options(id){
+  var instance = Instances.findOne(id)
+  //console.log(id)
+  var ctrl = {},choices={},last
+  container = $('#model-container');
+  var datGUI = new dat.GUI({autoPlace:false});
+  //var design = datGUI.addFolder("Design");
+  //var data = datGUI.addFolder("Data");
+  var guiControls = new function() {
+    //this.design = {}
+    //this.data = {}
+    for (key in instance.design){
+      this["design_"+instance.design[key].name] = instance.design[key].value
+      choices["design_"+instance.design[key].name] =instance.design[key].choices
+    }
+    for (key in instance.data){
+      this["data_"+instance.data[key].name] = instance.data[key].value 
+      choices["data_"+instance.data[key].name] = instance.data[key].choices
+
+    }
+    this.content = instance.content
+  }
+  for (key in guiControls){
+    //console.log(key)
+    //console.log(choices[key])
+    if (choices[key]) {
+      ctrl[key] = datGUI.add(guiControls, key, choices[key].split("|"))
+    } else {
+      ctrl[key] = datGUI.add(guiControls, key)
+    }
+    //last = key
+
+    ctrl[key].onFinishChange(function(value) {
+      // Fires when a controller loses focus.
+      //console.log(instance)
+      //alert("The new value for "+this.property+" is " + value);
+      var fld = this.property.split("_")
+      var obj ={},obj2 = JSON.parse(JSON.stringify(instance[fld[0]]));
+      //obj[fld[0]]=value;
+      if (fld[0] == "design" || fld[0] == "data"){
+        for (key in obj2){
+          if (obj2[key].name == fld[1]) obj2[key].value = value
+        }
+        obj[fld[0]] = obj2
+      } else {
+        obj[fld[0]] = value
+      }
+      //if (fld[1]) obj[fld[0]][fld[1]] = value
+      //console.log(obj)
+      Meteor.call("modInstance" , instance._id, obj)
+    });
+    
+  }
+
+    //data.show()
+    //design.show()
+    //this.content = instance.content
+
+  
+  console.log(guiControls)
+
+  
+
+  //ctrl.content = datGUI.add(guiControls,"content")
+
+  container.html(datGUI.domElement);
+}
 
 
 

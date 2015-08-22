@@ -15,7 +15,28 @@
 </template>
 
 
+<template name="listTemplates">
+	<table class="ui selectable celled table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Preview</th>
 
+    </tr>
+  </thead>
+  <tbody>
+
+  	{{#each template}}
+    <tr class="rowsel" id="row_{{_id}}">
+      <td>{{name}}</td>
+      <td>{{{compiled}}}</td>
+    </tr>
+    {{/each}}
+    
+  </tbody>
+</table>
+
+</template>
 
 
 

@@ -40,7 +40,7 @@ Schemas.Template = new SimpleSchema({
         type: String,
         label: "Content",
         optional:true,
-        max: 1000
+        max: 5000
     },
     visible: {
         type: String,

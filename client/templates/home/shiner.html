@@ -1,0 +1,208 @@
+<head>
+  <title>shiner</title>
+</head>
+
+
+<template name="bodyCont">
+  <div class="ui vertical inverted sidebar menu visible" id="toc">
+    <a class="item">Menu</a>
+    {{> listTemplates}} 
+    <button class="item circular ui icon button blue" id="addTT">
+      <i class="icon ellipsis horizontal"></i> <i class="icon plus"></i>
+    </button>
+  </div>
+ 
+  
+  <div class="pusher">
+
+    <div class="ui vertical menu visible" id="secSide">
+  
+      {{> visiTemplates}}
+  
+    </div>
+        <!-- Site content   ui vertical menu inverted sidebar visible
+    pusher
+    <div class="ui pointing vertical inverted menu">
+      <a class="item">
+        Site Title
+      </a>
+      <div class="item">
+        <b>Grouped Section</b>
+        <div class="menu">
+          <a class="item">Subsection 1</a>
+          <a class="active item">Subsection 1</a>
+          <a class="item">Subsection 1</a>
+          <div class="item">
+            <b>Grouped Section</b>
+            <div class="menu">
+              <a class="item">Subsection 1</a>
+              <a class="active item">Subsection 1</a>
+              <a class="item">Subsection 1</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+
+
+      {{> insertTemplateForm}}
+
+      {{> insertStageForm}}
+
+      {{> insertContainerForm}}
+
+      {{> insertInstanceForm}}
+
+      <div class="ui button">Neutral</div>
+    -->
+    <div id="stage">
+
+      {{> Contain}}
+
+
+
+      <button class="circular ui icon button" id="addCont">
+        <i class="icon plus"></i>
+      </button>
+
+      <button class="circular ui icon button" id="addContP">
+        <i class="icon plus"></i> <i class="icon ellipsis horizontal"></i>
+      </button>
+
+      <button class="circular ui icon button" id="sourcem">
+        <i class="icon code "></i>
+      </button>
+
+      <button class="circular ui icon button" id="preview">
+        <i class="icon unhide"></i>
+      </button>
+
+      <button class="circular ui icon button" id="editForm">
+        <i class="icon edit"></i>
+      </button>
+
+      <br>
+
+      <div class="ui container">
+       
+      </div>
+
+      <div id="model-container" style="position:fixed;top:0px;right:200px;"></div>
+    </div>
+  </div>
+
+
+  <div class="ui modal" id="modal">
+    <div class="header"></div>
+    <div class="content">
+      <p>
+        {{#if tt}}
+        {{> insertTemplateForm}}
+        {{else}}
+        {{> insertContainerForm}}
+        {{/if}}
+
+
+      </p>
+    </div>
+    <div class="actions">
+      <div class="ui approve button">Done</div>
+      
+      <div class="ui cancel button">Cancel</div>
+    </div>
+  </div>
+
+
+
+  <div class="ui modal" id="code">
+    <div class="header">Source</div>
+    <div class="content">
+      <div>
+        <textarea width="100%">
+          {{source}}
+        </textarea>
+
+
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui approve button">Done</div>
+      
+      <div class="ui cancel button">Cancel</div>
+    </div>
+  </div>
+</template>
+
+<template name="Contain">
+
+  {{#each containers}}
+    <div id="{{_id}}" class="dropzone"><legend>{{name}}</legend>
+      
+      {{#each this.instances}}
+        <div class="editable" id="c_{{_id}}">
+          {{{compiled}}}
+        </div>
+      {{/each}}
+        
+      <button class="item mini circular ui icon button upT">
+            <i class="icon small arrow up" id="u_{{_id}}"></i>
+          </button>
+      <button class="item mini circular ui icon button delT">
+            <i class="icon small minus" id="x_{{_id}}"></i>
+          </button>
+      <button class="item mini circular ui icon button downT">
+        <i class="icon small arrow down" id="d_{{_id}}"></i>
+      </button>
+    </div>
+  {{/each}}
+</template>
+
+<template name="listTemplates">
+
+  {{#each templates.children}}
+
+    {{#if hasChildren }}
+      <div class="item">
+      <div class="header"  id="{{_id}}">{{name}}</div>
+      <menu>
+        {{> Template.dynamic template="listT" data=this }}  
+      </menu>
+        </div>
+    {{else}}
+      <a class="item" id="{{_id}}">{{name}}</a>
+    {{/if}}
+
+  {{/each}}
+</template>
+
+
+<template name="visiTemplates">
+  <div id="listSee"></div>
+</template>
+
+
+<template name="listT">
+  {{#each this.children}}
+  
+    {{#if hasChildren }}
+      <div class="item">
+      <div class="header"  id="{{_id}}">{{name}} 
+        
+
+      </div>
+        <menu>
+        {{> Template.dynamic template="listT" data=this }}
+        </menu>
+      </div>
+    {{else}}
+      <a class="item" id="{{_id}}">{{name}}</a>
+    {{/if}}
+  
+  {{/each}}
+</template>
+
+<template name="singleT">
+    
+</template>

@@ -1,0 +1,33 @@
+<template name="insertStageForm">
+  {{> quickForm collection="Stages" id="updateStageForm" type="insert"}}
+</template>
+
+
+<template name="insertContainerForm">
+  {{> quickForm collection="Containers" id="insertContainerForm" type="insert"}}
+</template>
+
+<template name="insertInstanceForm">
+  {{> quickForm collection="Instances" id="insertInstanceForm" type="insert"}}
+</template>
+
+<template name="insertTemplateForm">
+  {{#autoForm collection="Templates" id="insertTemplateForm" type="insert"}}
+    <fieldset>
+      <legend>Add a Template</legend>
+      {{> afQuickField name='parent' options=options}}
+      {{> afQuickField name='name'}}
+      {{> afQuickField name='content' rows=10}}
+      {{> afQuickField name='visible' rows=2}}
+      {{> afQuickField name='isContainer'}}
+      {{> afQuickField name='design' }}
+      {{> afQuickField name='data' }}
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Insert</button>
+  {{/autoForm}}
+
+  <div id="ins"></div>
+</template>
+
+
+

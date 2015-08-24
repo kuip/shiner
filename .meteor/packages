@@ -17,3 +17,8 @@ polguixe:meteor-datgui
 fabienb4:autoform-semantic-ui
 ryanswapp:interactjs
 reactive-var
+kadira:flow-router
+kadira:blaze-layout
+meteorhacks:fast-render
+dburles:collection-helpers
+underscore

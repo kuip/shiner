@@ -1,0 +1,14 @@
+<head>
+  <title>shiner</title>
+</head>
+
+<template name="home">
+	<div class="ui three column grid">
+  		{{#each apps}}
+  			<div class="column app">
+  				<h1 class="ui header">{{name}}</h1>
+  				{{{compiled}}}
+  			</div>
+			{{/each}}
+  </div>
+</template>

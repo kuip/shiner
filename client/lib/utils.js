@@ -7,12 +7,12 @@ buildMap = function buildMap(id){
     out.hasChildren =false;
     out.children =[]
     tlist.forEach(function(tem){
-      console.log(tem._id)
+      //console.log(tem._id)
       out.children.push(buildMap(tem._id))
     })
-    console.log(out.children.length)
+    //console.log(out.children.length)
     if (out.children.length > 0) out.hasChildren =true;
-    console.log(out)
+    //console.log(out)
     return out;
   }
 }
@@ -34,7 +34,7 @@ reform = function reform(objArray){
   for(item in objArray){
     out[objArray[item].name] = objArray[item].value;
   }
-  console.log(out)
+  //console.log(out)
   return out;
 }
 
@@ -107,7 +107,7 @@ do_options = function do_options(id){
     //this.content = instance.content
 
   
-  console.log(guiControls)
+  //console.log(guiControls)
 
   
 

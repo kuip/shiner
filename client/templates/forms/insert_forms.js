@@ -4,9 +4,8 @@ Template.insertTemplateForm.onRendered(function(){
     //$('#toc').sidebar('setting', 'transition', 'slide along').toggle().toggle()
     var out =""
     Templates.find({content: 'abcd', note:{ $exists: true}}).forEach(function(template){
-    	//console.log(template.name)
-    	//console.log(template.params)
-    	out = out+ StringTemplate.compile(template.content, {design:template.design, data: template.data});
+      template.compile()
+    	out += template.compiled
     })
     //console.log(out)
     $("#ins").html(out)

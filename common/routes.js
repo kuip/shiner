@@ -1,6 +1,6 @@
 FlowRouter.route('/', {
 	action: function() {
-		BlazeLayout.render('layout', {main: "bodyCont"})
+		BlazeLayout.render('layout', {main: "home"})
 	}
 })
 
@@ -10,8 +10,14 @@ FlowRouter.route('/form', {
 	}
 })
 
-FlowRouter.route('/preview', {
+FlowRouter.route('/preview/:app', {
 	action: function() {
 		BlazeLayout.render('layout', {main: "preview"})
+	}
+})
+
+FlowRouter.route('/app/:app', {
+	action: function() {
+		BlazeLayout.render('layout', {main: "bodyCont"})
 	}
 })

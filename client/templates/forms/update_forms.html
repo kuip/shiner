@@ -2,6 +2,7 @@
   <table class="ui selectable celled table">
     <thead>
       <tr>
+        <th>Parent</th>
         <th>Name</th>
         <th>Preview</th>
       </tr>
@@ -10,6 +11,7 @@
 
       {{#each template}}
         <tr class="rowsel" id="row_{{_id}}" data-id="{{_id}}">
+          <td>{{parentName}}</td>
           <td>{{name}}</td>
           <td>{{compiled}}</td>
         </tr>

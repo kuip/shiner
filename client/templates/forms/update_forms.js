@@ -1,11 +1,16 @@
 Template.listTemplatesForm.helpers({
+	parentName: function() {
+		var parent = Templates.findOne(this.parent)
+		if(parent)
+			return parent.name
+	},
 	template: function() {
 		return Templates.find().fetch()
 	},
 	compiled: function(){
 		var doc = this
-		if(doc.content)
-			return StringTemplate.compile(doc.content, {design:doc.design, data: doc.data});
+		doc.compile()
+		return doc.compiled
 	}
 })
 
@@ -20,10 +25,10 @@ Template.listTemplatesForm.events({
 Template.updateTemplateForm.helpers({
 	compiled: function(){
 		var templId = Session.get("templId")
-		if(templId){
-			var doc = Templates.findOne(templId)
-			if(doc && doc.content)
-				return StringTemplate.compile(doc.content, {design:doc.design, data: doc.data});
+		var doc = Templates.findOne(templId)
+		if(doc){
+			doc.compile()
+			return doc.compiled
 		}
 	},
 	json: function(){

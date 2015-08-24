@@ -4,23 +4,14 @@ Template.preview.onRendered(function() {
 })
 
 Template.preview.helpers({
-	html_out: function(){
-    var out ="",templIn="";
-    var cont = Containers.find({app: "app 1"},{sort:{ordering:1}}).fetch();
-    var instances;
-
-    cont.forEach(function(contain){
-      //out = out+'\n\n<template name="'+contain.name+'">';
-      templIn = templIn+"\n{{> "+ contain.name+"}} ";
-      instances = Instances.find({container: contain._id},{sort:{ordering:1}}).fetch();
-      instances.forEach(function(ins){
-        out = out+"\n"+ins.content;
-      })
-      //out = out+'</template> <!-- '+contain.name+' -->';
+  html_out: function() {
+    var out = ''
+    var containers = Containers.find({app: FlowRouter.getParam('app')},{sort:{ordering:1}}).fetch();
+    containers.forEach(function(container) {
+      container.compile()
+      out += container.compiled
     })
-    //out = templIn + out;
-    console.log(out)
-    return StringTemplate.compile(out, {design:[], data: []});
 
+    return out
   }
 })

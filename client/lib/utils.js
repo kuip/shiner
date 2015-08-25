@@ -1,22 +1,3 @@
-buildMap = function buildMap(id){
-  //var out = Templates.findOne(id)
-  var out = Templates.find({_id:id}, {limit:1}).fetch()[0]
-  if(out){
-    var tlist = Templates.find({parent: id,content: undefined, note:{ $exists: false}}).fetch()
-    //var out = {}
-    out.hasChildren =false;
-    out.children =[]
-    tlist.forEach(function(tem){
-      //console.log(tem._id)
-      out.children.push(buildMap(tem._id))
-    })
-    //console.log(out.children.length)
-    if (out.children.length > 0) out.hasChildren =true;
-    //console.log(out)
-    return out;
-  }
-}
-
 makeid = function makeid(len)
 {
     var text = "";
@@ -28,25 +9,34 @@ makeid = function makeid(len)
     return text;
 }
 
-reform = function reform(objArray){
-  var out ={};
+buildMap = function buildMap(id){
+  var out = Templates.findOne(id)
+  if(out){
+    var tlist = Templates.find({parent: id,content: undefined, note:{ $exists: false}}).fetch()
+    //var out = {}
+    out.hasChildren =false;
+    out.children =[]
+    tlist.forEach(function(tem){
+      out.children.push(buildMap(tem._id))
+    })
 
-  for(item in objArray){
-    out[objArray[item].name] = objArray[item].value;
+    if (out.children.length > 0) out.hasChildren =true;
+    //console.log(out)
+    return out;
   }
-  //console.log(out)
-  return out;
 }
 
 
 seeThem = function(id){
   var out =""
   var tlist = Templates.find({parent: id}).fetch()  //,content: 'abcd', note:{ $exists: true}
-  tlist.forEach(function(tem){
-    out = out+ "<div class='item'><div id='"+tem._id+"' class='draggable drag-drop'>"+StringTemplate.compile(tem.content, {design:reform(tem.design), data: reform(tem.data)})+"</div></div>"
+  tlist.forEach(function(temp){
+    temp.compile()
+    out += temp.compiled
   })
   $("#listSee").html(out)
 }
+
 
 do_options = function do_options(id){
   var instance = Instances.findOne(id)

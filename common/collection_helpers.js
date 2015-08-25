@@ -6,22 +6,28 @@ compileTemplate = function(template) {
 	    design[template.design[i].name] = template.design[i].value
 	    if (template.design[i].value.indexOf("|") !== -1){
 	    	design[template.design[i].name] = template.design[i].value.split("|")
-	    	if (design[template.design[i].name][0] !== -1){
+	    	if (design[template.design[i].name][0].indexOf(":") !== -1){
 	    		for (ii in design[template.design[i].name]){
 	    			design[template.design[i].name][ii] = design[template.design[i].name][ii].split(":")
 	    		}
 	    	}
+	    }
+	    else if (template.design[i].value.indexOf(":") !== -1){
+	    	design[template.design[i].name] = template.design[i].value.split(":")
 	    }
 	  }
 	  for (i in template.data) {
 	    data[template.data[i].name] = template.data[i].value
 	    if (template.data[i].value.indexOf("|") !== -1){
 	    	data[template.data[i].name] = template.data[i].value.split("|")
-	    	if (data[template.data[i].name][0] !== -1){
+	    	if (data[template.data[i].name][0].indexOf(":") !== -1){
 	    		for (ii in data[template.data[i].name]){
 	    			data[template.data[i].name][ii] = data[template.data[i].name][ii].split(":")
 	    		}
 	    	}
+	    }
+	    else if (template.data[i].value.indexOf(":") !== -1){
+	    	data[template.data[i].name] = template.data[i].value.split(":")
 	    }
 	  }
 	  return StringTemplate.compile(template.content, {design:design, data: data})

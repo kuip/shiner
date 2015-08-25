@@ -7,6 +7,14 @@ compileTemplate = function(template) {
 	  }
 	  for (i in template.data) {
 	    data[template.data[i].name] = template.data[i].value
+	    if (template.data[i].value.indexOf("|") !== -1){
+	    	data[template.data[i].name] = template.data[i].value.split("|")
+	    	if (data[template.data[i].name][0] !== -1){
+	    		for (ii in data[template.data[i].name]){
+	    			data[template.data[i].name][ii] = data[template.data[i].name][ii].split(":")
+	    		}
+	    	}
+	    }
 	  }
 	  return StringTemplate.compile(template.content, {design:design, data: data})
 	}

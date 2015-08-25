@@ -13,10 +13,15 @@ Template.insertTemplateForm.onRendered(function(){
 
 Template.insertTemplateForm.helpers({
   options: function () {
-    var out = Templates.find({}, {fields: {name: 1, _id: 1}}).fetch()
-    out.forEach(function(template){
-        template.label  = template.name
-        template.value = template._id
+    var out = [],i=0;
+    var templs= Templates.find({}, {fields: {name: 1, _id: 1,content:1}}).fetch()
+    templs.forEach(function(template){
+        if (typeof template.content === "undefined") {
+          out[i]={}
+          out[i].label  = template.name
+          out[i].value = template._id
+          i++
+        }
     });
     console.log(out)
     return out

@@ -13,6 +13,9 @@ Template.home.helpers({
 		})
 
 		return apps
+	},
+	color: function() {
+		//var 
 	}
 })
 

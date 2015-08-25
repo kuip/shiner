@@ -87,7 +87,9 @@ Template.bodyCont.events({
 
   },
   "click #preview":function(ev, inst){
-    window.open('/preview', '_blank')
+    var app = Session.get('appQuery')
+    if(app.app)
+      window.open('/preview/'+app.app, '_blank')
   },
   "click #editForm": function(ev, inst) {
     window.open('/form', '_blank')

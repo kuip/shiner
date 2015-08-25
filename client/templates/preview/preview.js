@@ -5,13 +5,17 @@ Template.preview.onRendered(function() {
 
 Template.preview.helpers({
   html_out: function() {
-    var out = ''
     var containers = Containers.find({app: FlowRouter.getParam('app')},{sort:{ordering:1}}).fetch();
+    var out = ''
     containers.forEach(function(container) {
       container.compile()
       out += container.compiled
     })
-
+    Meteor.setTimeout(function() {
+      $('.ui.dropdown').dropdown()
+      $('.ui.embed').embed()
+      $('.special.cards .image').dimmer({ on: 'hover' })
+    }, 1000)
     return out
   }
 })

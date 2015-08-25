@@ -32,7 +32,7 @@ seeThem = function(id){
   var tlist = Templates.find({parent: id}).fetch()  //,content: 'abcd', note:{ $exists: true}
   tlist.forEach(function(temp){
     temp.compile()
-    out += "<div class='item'><div id='"+temp._id+"' class='draggable drag-drop'>" + temp.compiled + "</div></div>"
+    out += "<div class='item'><div id='"+temp._id+"' class='draggable drag-drop template'>" + temp.compiled + "</div></div>"
   })
   $("#listSee").html(out)
 }

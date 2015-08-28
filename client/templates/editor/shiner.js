@@ -39,8 +39,13 @@ Template.bodyCont.events({
     $("#modal").modal("show")
   },
   "click #sourcem":function(ev, inst){
-    //alert("source")
     $("#code").modal("show")
+  },
+  "click #sourcej":function(ev, inst){
+    $("#jsonsource").modal("show")
+  },
+  "click #meteor":function(ev, inst){
+    $("#meteorsource").modal("show")
   },
   "click .delT":function(ev, inst){
     var templId = this._id

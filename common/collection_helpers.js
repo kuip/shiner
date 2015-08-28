@@ -1,48 +1,107 @@
-compileTemplate = function(template) {
-	if(template.content) {
-		var design={},data={}
+compileHelpers = function(data, help) {
+	if(!help)
+		help = {}
+	for (i in data) {
+    help[data[i].name] = data[i].value
+    if (data[i].value.indexOf("|") !== -1){
+    	help[data[i].name] = data[i].value.split("|")
+    	if (help[data[i].name][0].indexOf(":") !== -1){
+    		for (ii in help[data[i].name]){
+    			help[data[i].name][ii] = help[data[i].name][ii].split(":")
+    		}
+    	}
+    }
+    else if (data[i].value.indexOf(":") !== -1){
+    	help[data[i].name] = data[i].value.split(":")
+    }
+  }
 
-	  for (i in template.design) {
-	    design[template.design[i].name] = template.design[i].value
-	    if (template.design[i].value.indexOf("|") !== -1){
-	    	design[template.design[i].name] = template.design[i].value.split("|")
-	    	if (design[template.design[i].name][0].indexOf(":") !== -1){
-	    		for (ii in design[template.design[i].name]){
-	    			design[template.design[i].name][ii] = design[template.design[i].name][ii].split(":")
-	    		}
-	    	}
-	    }
-	    else if (template.design[i].value.indexOf(":") !== -1){
-	    	design[template.design[i].name] = template.design[i].value.split(":")
-	    }
-	  }
-	  for (i in template.data) {
-	    data[template.data[i].name] = template.data[i].value
-	    if (template.data[i].value.indexOf("|") !== -1){
-	    	data[template.data[i].name] = template.data[i].value.split("|")
-	    	if (data[template.data[i].name][0].indexOf(":") !== -1){
-	    		for (ii in data[template.data[i].name]){
-	    			data[template.data[i].name][ii] = data[template.data[i].name][ii].split(":")
-	    		}
-	    	}
-	    }
-	    else if (template.data[i].value.indexOf(":") !== -1){
-	    	data[template.data[i].name] = template.data[i].value.split(":")
-	    }
-	  }
-	  return StringTemplate.compile(template.content, {design:design, data: data})
+  return help
+}
+
+compileTemplate = function(template) {
+	if(!template.content)
+		return
+
+	var design={},data={}
+
+	design = compileHelpers(template.design)
+	data = compileHelpers(template.data)
+
+  return StringTemplate.compile(template.content, {design:design, data: data})
+}
+
+McompileTemplate = function(template) {
+	if(!template.content)
+		return
+
+	var design={},data={},values,
+		id = 'i'+template._id
+
+	design = compileHelpers(template.design)
+	data = compileHelpers(template.data)
+	values = 'Template.'+ id +'.helpers({\n'
+		+ '	data_'+ id +': function(){\n'
+		+ '		return '
+		+ JSON.stringify(data)
+		+ '\n	},\n'
+		+ '	design_'+ id +': function(){\n'
+		+ '		return '
+		+ JSON.stringify(design)
+		+ '\n	}\n'
+		+ '})'
+	
+	template.content = template.content.replace('data.', 'data_'+ id +'.')
+	template.content = template.content.replace('design.', 'design_'+ id +'.')
+
+	return {
+		content: '<template name="' + id + '">\n' + template.content + '\n</template>',
+		values: values,
+		id: id
+	}
+}
+
+JcompileTemplate = function(template) {
+	if(!template.content)
+		return
+
+	var design={},data={}
+
+	design = compileHelpers(template.design)
+	data = compileHelpers(template.data)
+
+	return {
+		//html: '<template name="' + template._id + '">' + template.content + '</template>',
+		content: template.content,
+		values: {
+			design:design,
+			data: data
+		},
+		id: template._id
 	}
 }
 
 Templates.helpers({
 	compile: function() {
-		this.compiled = compileTemplate(this);
+		this.compiled = compileTemplate(this)
+	},
+	jcompile: function() {
+		this.jcompiled = JcompileTemplate(this)
+	},
+	mcompile: function() {
+		this.mcompiled = McompileTemplate(this)
 	}
 })
 
 Instances.helpers({
 	compile: function() {
-		this.compiled = compileTemplate(this);
+		this.compiled = compileTemplate(this)
+	},
+	jcompile: function() {
+		this.jcompiled = JcompileTemplate(this)
+	},
+	mcompile: function() {
+		this.mcompiled = McompileTemplate(this)
 	}
 })
 
@@ -56,6 +115,24 @@ Containers.helpers({
       ins.compile() 
       self.instances.push(ins)
       self.compiled += ins.compiled
+    })
+	},
+	jcompile: function() {
+		var self = this
+		self.jinstances = []
+		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch();
+    instances.forEach(function(ins){
+      ins.jcompile() 
+      self.jinstances.push(ins.jcompiled)
+    })
+	},
+	mcompile: function() {
+		var self = this
+		self.minstances = []
+		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch();
+    instances.forEach(function(ins){
+      ins.mcompile() 
+      self.minstances.push(ins.mcompiled)
     })
 	}
 })

@@ -28,6 +28,14 @@
         <i class="icon code "></i>
       </button>
 
+      <button class="circular ui icon button" id="sourcej">
+        <i class="icon code"></i>j
+      </button>
+
+      <button class="circular ui icon button" id="meteor">
+        <i class="icon code"></i>m
+      </button>
+
       <button class="circular ui icon button" id="preview">
         <i class="icon unhide"></i>
       </button>
@@ -70,16 +78,40 @@
     <div class="header">Source</div>
     <div class="content">
       <div>
-        <textarea width="100%">
+        <textarea style="width: 100%;">
           {{source}}
         </textarea>
-
-
       </div>
     </div>
-    <div class="actions">
-      <div class="ui approve button">Done</div>
-      
+    <div class="actions">  
+      <div class="ui cancel button">Cancel</div>
+    </div>
+  </div>
+
+  <div class="ui modal" id="jsonsource">
+    <div class="header">Json Source</div>
+    <div class="content">
+      <div>
+        <textarea style="width: 100%;">
+          {{> jsonsource}}
+        </textarea>
+      </div>
+    </div>
+    <div class="actions">  
+      <div class="ui cancel button">Cancel</div>
+    </div>
+  </div>
+
+  <div class="ui modal" id="meteorsource">
+    <div class="header">Meteor.js Source</div>
+    <div class="content">
+      <div>
+        <textarea style="width: 100%;">
+          {{> meteorsource}}
+        </textarea>
+      </div>
+    </div>
+    <div class="actions">  
       <div class="ui cancel button">Cancel</div>
     </div>
   </div>

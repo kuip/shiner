@@ -23,7 +23,7 @@ Template.insertTemplateForm.helpers({
           i++
         }
     });
-    console.log(out)
+
     return out
 
     /*[

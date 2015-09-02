@@ -14,7 +14,7 @@ Template.preview.helpers({
     Meteor.setTimeout(function() {
       $('.ui.dropdown').dropdown()
       $('.ui.embed').embed()
-      $('.special.cards .image').dimmer({ on: 'hover' })
+      $('.dimmer').dimmer({ on: 'hover' })
     }, 1000)
     return out
   }

@@ -1,8 +1,11 @@
 <template name="meteorsource">
-	{{#each source}}
+	{{#with source}}
+{{{this.integration}}}
+		{{#each this.out}}
 {{{content}}}
 {{{values}}}
-	{{/each}}
+		{{/each}}
+	{{/with}}
 </template>
 
 <template name="jsonsource">

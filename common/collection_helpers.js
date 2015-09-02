@@ -51,8 +51,8 @@ McompileTemplate = function(template) {
 		+ '\n	}\n'
 		+ '})'
 	
-	template.content = template.content.replace('data.', 'data_'+ id +'.')
-	template.content = template.content.replace('design.', 'design_'+ id +'.')
+	template.content = template.content.replace(/data\./g, 'data_'+ id +'.')
+	template.content = template.content.replace(/design\./g, 'design_'+ id +'.')
 
 	return {
 		content: '<template name="' + id + '">\n' + template.content + '\n</template>',
@@ -129,10 +129,12 @@ Containers.helpers({
 	mcompile: function() {
 		var self = this
 		self.minstances = []
+		self.integration = ''
 		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch();
     instances.forEach(function(ins){
       ins.mcompile() 
       self.minstances.push(ins.mcompiled)
+      self.integration += '{{> i' + ins._id + '}}\n'
     })
 	}
 })

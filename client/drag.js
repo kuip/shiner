@@ -3,7 +3,7 @@ interact('.draggable')
   .draggable({
     // enable inertial throwing
     inertia: true,
-    overlap: 0.01,
+    overlap: 0.1,
     //manualStart: true,
     // keep the element within the area of it's parent
     restrict: {

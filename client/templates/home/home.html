@@ -1,7 +1,7 @@
 <head>
   <title>shiner</title>
-  <link rel="stylesheet" type="text/css" class="ui" href="/js/semantic/embed.min.css">
-  <script src="/js/semantic/embed.min.js"></script>
+<!--   <link rel="stylesheet" type="text/css" class="ui" href="/bower_components/split-pane/split-pane.css">
+  <script src="/bower_components/split-pane/split-pane.js"></script> -->
 </head>
 
 <template name="home">
@@ -13,4 +13,13 @@
   			</div>
 			{{/each}}
   </div>
+</template>
+
+<template name="header">
+  {{#each css}}
+    <link rel="stylesheet" type="text/css" href="{{this.[0]}}">
+  {{/each}} 
+  {{#each js}}
+    <script src="{{this.[0]}}"></script>
+  {{/each}}                                                                                                                                                                                                                 
 </template>

@@ -1,65 +1,82 @@
 <template name="bodyCont">
-  <div class="ui vertical inverted sidebar menu visible" id="toc">
-    <a class="item">Menu</a>
-    {{> listTemplates}} 
-    <button class="item circular ui icon button blue" id="addTT">
-      <i class="icon ellipsis horizontal"></i> <i class="icon plus"></i>
-    </button>
-    <button class="circular ui icon button" id="editForm">
-        <i class="icon edit"></i>
-      </button>
-  </div>
- 
-  
-  <div class="pusher">
-    <div id="stage">
 
-      {{> Contain}}
 
-      <button class="circular ui icon button" id="addCont">
+  <div class="split-pane vertical-percent" style="min-width: 5px;">
+    <div class="split-pane-component" id="left-component">
+      <div class="item">
+        {{> listFrameworks}} 
+        <button class="circular ui icon button" id="addF">
         <i class="icon plus"></i>
       </button>
 
-      <button class="circular ui icon button" id="addContP">
-        <i class="icon plus"></i> <i class="icon ellipsis horizontal"></i>
-      </button>
-
-      <button class="circular ui icon button" id="sourcem">
-        <i class="icon code "></i>
-      </button>
-
-      <button class="circular ui icon button" id="sourcej">
-        <i class="icon code"></i>j
-      </button>
-
-      <button class="circular ui icon button" id="meteor">
-        <i class="icon code"></i>m
-      </button>
-
-      <button class="circular ui icon button" id="preview">
-        <i class="icon unhide"></i>
-      </button>
-
-      <br>
-
-      <div class="ui container">
-       
       </div>
+      {{> listTemplates}} 
+      <button class="circular ui icon button" id="addTT">
+        <i class="icon ellipsis horizontal"></i> <i class="icon plus"></i>
+      </button>
+      <button class="circular ui icon button" id="editForm">
+          <i class="icon edit"></i>
+      </button>
 
-      <div id="model-container" style="position:fixed;top:0px;right:200px;"></div>
     </div>
-    {{> templateMenu}}
-  </div>
-  
+    <div class="split-pane-divider" id="my-divider" ></div>
+    <div class="split-pane-component" id="right-component">
+      
+      <div id="stage">
 
-  <div class="ui modal" id="modal">
+        {{> Contain}}
+
+        <button class="circular ui icon button" id="addCont">
+          <i class="icon plus"></i>
+        </button>
+
+        <button class="circular ui icon button" id="addContP">
+          <i class="icon plus"></i> <i class="icon ellipsis horizontal"></i>
+        </button>
+
+        <button class="circular ui icon button" id="sourcem">
+          <i class="icon code "></i>
+        </button>
+
+        <button class="circular ui icon button" id="sourcej">
+          <i class="icon code"></i>j
+        </button>
+
+        <button class="circular ui icon button" id="meteor">
+          <i class="icon code"></i>m
+        </button>
+
+        <button class="circular ui icon button" id="preview">
+          <i class="icon unhide"></i>
+        </button>
+
+        <br>
+
+        <div class="ui container">
+         
+        </div>
+
+        <div id="model-container" style="position:fixed;top:0px;right:200px;"></div>
+      </div>
+      {{> templateMenu}}
+    </div>
+
+
+    <div class="ui modal" id="modal">
     <div class="header"></div>
     <div class="content">
       <p>
-        {{#if tt}}
+        {{#if equals tt "template"}}
         {{> insertTemplateForm}}
-        {{else}}
+        {{/if}}
+        {{#if equals tt "container"}}
         {{> insertContainerForm}}
+        {{/if}}
+        {{#if equals tt "page"}}
+        {{> insertPageForm}}
+        {{/if}}
+        {{#if equals tt "framework"}}
+        {{> insertFrameworkForm}}
         {{/if}}
 
 
@@ -115,6 +132,13 @@
       <div class="ui cancel button">Cancel</div>
     </div>
   </div>
+
+
+  </div>
+
+ 
+
+  
 </template>
 
 <template name="Contain">
@@ -157,6 +181,17 @@
 
   {{/each}}
 </template>
+
+
+<template name="listFrameworks">
+  <select id="frameSel">
+  {{#each frameworks}}
+  <option value="{{this.root}}">{{this.name}}</option>
+
+  {{/each}}
+</select>
+</template>
+
 
 <template name="templateMenu">
   <div id="secSide">

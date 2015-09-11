@@ -3,6 +3,10 @@ Template.bodyCont.onCreated(function(){
   console.log(this.tt)
 })
 
+Template.bodyCont.onRendered(function(){
+  $('div.split-pane').splitPane();
+})
+
 
 Template.bodyCont.helpers({
   tt: function(){
@@ -17,6 +21,23 @@ Template.bodyCont.helpers({
     })
 
     return out
+  },
+  equals: function(v1, v2){
+    if (v1 == v2) return true;
+    return false;
+  }
+})
+
+Template.listFrameworks.helpers({
+  frameworks: function(){
+    var framew = Frameworks.find({}).fetch()
+    return framew
+  }
+})
+
+Template.listFrameworks.events({
+  "change #frameSel": function(ev, inst){
+    console.log(inst.val())
   }
 })
 
@@ -25,7 +46,12 @@ Template.bodyCont.events({
     //alert("addTT")
     //Meteor.call("insertTemplate" , par)
     console.log(inst.tt)
-    inst.tt.set(true)
+    inst.tt.set("template")
+    $("#modal").modal("show")
+  },
+  "click #addF": function(ev, inst){
+    console.log(inst.tt)
+    inst.tt.set("framework")
     $("#modal").modal("show")
   },
   "click #addCont": function(ev, inst){
@@ -35,7 +61,7 @@ Template.bodyCont.events({
   },
   "click #addContP": function(ev, inst){
     //alert("addTT")
-    inst.tt.set(false)
+    inst.tt.set("container")
     $("#modal").modal("show")
   },
   "click #sourcem":function(ev, inst){

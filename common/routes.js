@@ -4,6 +4,12 @@ FlowRouter.route('/', {
 	}
 })
 
+FlowRouter.route('/page/:page', {
+	action: function() {
+		BlazeLayout.render('layout', {main: "page"})
+	}
+})
+
 FlowRouter.route('/form', {
 	action: function() {
 		BlazeLayout.render('layout', {main: "listTemplatesForm"})

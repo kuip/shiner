@@ -118,11 +118,13 @@ html,body {
   display: inline-block;
   padding: 0.3em 0.3em;
   background:rgba(100,100,100,0.2);
+  min-height: 30px;
+  min-width: 30px;
 }
 
 .template {
-  min-height: 100px;
-  min-width: 100px;
+  min-height: 50px;
+  min-width: 50px;
 }
 
 #stage {

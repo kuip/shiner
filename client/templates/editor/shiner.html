@@ -1,8 +1,8 @@
 <template name="bodyCont">
 
 
-  <div class="split-pane vertical-percent" style="min-width: 5px;">
-    <div class="split-pane-component" id="left-component">
+  <div id="splitter">
+    <div class="splitter-west">
       <div class="item">
         {{> listFrameworks}} 
         <button class="circular ui icon button" id="addF">
@@ -19,8 +19,7 @@
       </button>
 
     </div>
-    <div class="split-pane-divider" id="my-divider" ></div>
-    <div class="split-pane-component" id="right-component">
+    <div class="splitter-east">
       
       <div id="stage">
 

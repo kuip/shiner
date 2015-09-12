@@ -4,7 +4,12 @@ Template.bodyCont.onCreated(function(){
 })
 
 Template.bodyCont.onRendered(function(){
-  $('div.split-pane').splitPane();
+  $("#splitter").zinoSplitter({
+        panes: [
+            {size: 150}, 
+            { region: "east"}
+        ]
+    });
 })
 
 

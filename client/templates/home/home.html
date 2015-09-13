@@ -7,20 +7,18 @@
 <script src="/bower_components/zino-splitter/zino.position.min.js"></script>
 <script src="/bower_components/zino-splitter/zino.draggable.min.js"></script>
 <script src="/bower_components/zino-splitter/zino.splitter.min.js"></script>
-<style type="text/css">
-#splitter{
-    height: 1000px;
-    width: 100%; 
-    background-color: #fff;
-}
-.splitter-west{
-    background-color: #eee;
-}
-.splitter-east{
-    background-color: #fff;
-}
-</style>
 </head>
+
+<template name="headers">
+  {{#with header}}
+    {{#each this.css}}
+      <link rel="stylesheet" type="text/css" href="{{this}}">
+    {{/each}} 
+    {{#each this.js}}
+      <script src="{{this}}"></script>
+    {{/each}}
+  {{/with}}
+</template>
 
 <template name="home">
 	<div class="ui three column grid">
@@ -33,11 +31,14 @@
   </div>
 </template>
 
-<template name="header">
-  {{#each css}}
-    <link rel="stylesheet" type="text/css" href="{{this.[0]}}">
-  {{/each}} 
-  {{#each js}}
-    <script src="{{this.[0]}}"></script>
-  {{/each}}                                                                                                                                                                                                                 
+<template name="app">
+  <div class="ui three column grid">
+      {{#each pages}}
+        <div class="column app">
+          <h1 class="ui header">{{name}}</h1>
+          {{{compiled}}}
+        </div>
+      {{/each}}
+  </div>
 </template>
+

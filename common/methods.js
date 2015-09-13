@@ -4,14 +4,26 @@ Meteor.methods({
 
         Templates.insert(par)
     },
-    insertContainer: function(par){
+    insertContainer: function(par, pagename, appname){
         check(par, Object)
+        console.log(par)
+        console.log(pagename)
+        console.log(appname)
+        var pageId
 
-        var appId = par.app
-        var insts  = Containers.find({app: appId}).count()
+        if(pagename && appname) {
+            check(pagename, String)
+            pageId = Pages.insert({name: pagename, app: appname})
+            console.log(pageId)
+            par.page = pageId
+        }
+
+        pageId = par.page
+        var insts  = Containers.find({page: pageId}).count()
         //alert(insts)
 
-        par.ordering = insts +1;
+        par.ordering = insts +1
+        console.log(par)
         Containers.insert(par)
     },
     moveContainer: function(id,by){

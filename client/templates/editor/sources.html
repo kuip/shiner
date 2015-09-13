@@ -1,0 +1,30 @@
+<template name="source">
+	{{#with type}}
+		{{#if Hequals this 'meteor'}}
+			<pre>
+				{{#with sourcem}}
+					{{#unless what}}
+					{{log this}}
+						{{this.integration}}
+						{{this.content}}
+						{{this.values}}
+					{{else}}
+						{{#if Hequals what 'html'}}
+							{{this.integration}}
+							{{this.content}}
+						{{else}}
+							/*{{this.integration}}*/
+							{{this.values}}
+						{{/if}}
+					{{/unless}}
+				{{/with}}
+			</pre>
+		{{else}}
+			{{#if Hequals this 'json'}}
+				{{sourcej}}
+			{{else}}
+				<pre>{{sourceh}}</pre>
+			{{/if}}
+		{{/if}}
+	{{/with}}
+</template>

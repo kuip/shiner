@@ -1,3 +1,9 @@
+setIFrame = function(obj) {
+  console.log(obj)
+  var win = document.getElementsByTagName('iframe')[0].contentWindow;
+  win.postMessage(JSON.stringify(obj), "*");
+}
+
 makeid = function makeid(len)
 {
     var text = "";
@@ -34,7 +40,7 @@ seeThem = function(id){
     temp.compile()
     out += "<div class='item'><div id='"+temp._id+"' class='draggable drag-drop template'>" + temp.compiled + "</div></div>"
   })
-  $("#listSee").html(out)
+  setIFrame({out: out})
 }
 
 

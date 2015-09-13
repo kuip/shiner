@@ -21,4 +21,5 @@ kadira:flow-router
 kadira:blaze-layout
 meteorhacks:fast-render
 dburles:collection-helpers
+u2622:persistent-session
 underscore

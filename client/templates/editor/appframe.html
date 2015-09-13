@@ -1,0 +1,84 @@
+<template name="container">
+  <br><br>
+  <div id="stage">
+    {{> Contain}}
+
+    <div class="ui container">
+       
+      </div>
+
+      <div id="model-container"></div>
+  </div>
+  <div class="stickybuttons">
+    {{> buttons}}
+  </div>
+  <div class="stickytemps">
+    {{> templateMenu}}
+  </div>
+  {{> modaladd}}
+</template>
+
+<template name="buttons">
+  <a class="circular ui icon" id="addCont">
+    <i class="icon plus"></i>
+  </a>
+
+  <a class="circular ui icon" id="addContP">
+    <i class="icon ellipsis horizontal"></i>
+  </a>
+
+  <a class="circular ui icon" href="/source/html/{{appname}}/{{page}}" target="_blank">
+    <i class="icon code "></i>
+  </a>
+
+  <a class="circular ui icon" href="/source/json/{{appname}}/{{page}}" target="_blank">
+    json
+  </a>
+
+  <a class="circular ui icon" href="/source/meteor/{{appname}}/{{page}}" target="_blank">
+    meteor
+  </a>
+
+  <a class="circular ui icon" href="/preview/{{appname}}/{{page}}" target="_blank">
+    <i class="icon unhide"></i>
+  </a>
+
+  <div class="pagelinks">
+    {{#each pagelinks}}
+      <a class="circular ui icon" href="/container/{{appname}}/{{this.name}}">{{this.name}}</a>
+    {{/each}}
+  </div>
+
+  <br>
+</template>
+
+
+
+<template name="Contain">
+
+  {{#each containers}}
+    <div id="{{_id}}" class="dropzone"><legend>{{name}}</legend>
+      {{#each this.instances}}
+        <div class="editable" id="c_{{_id}}">
+          {{{compiled}}}
+        </div>
+      {{/each}}
+        
+      <button class="item mini circular ui icon button upT">
+            <i class="icon small arrow up" id="u_{{_id}}"></i>
+          </button>
+      <button class="item mini circular ui icon button delT">
+            <i class="icon small minus" id="x_{{_id}}"></i>
+          </button>
+      <button class="item mini circular ui icon button downT">
+        <i class="icon small arrow down" id="d_{{_id}}"></i>
+      </button>
+    </div>
+  {{/each}}
+</template>
+
+<template name="templateMenu">
+  <div id="secSide">
+      <div id="listSee">{{{chosenTemplates}}}</div>
+  </div>
+</template>

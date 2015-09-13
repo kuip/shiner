@@ -21,47 +21,17 @@
     </div>
     <div class="splitter-east">
       
-      <div id="stage">
-
-        {{> Contain}}
-
-        <button class="circular ui icon button" id="addCont">
-          <i class="icon plus"></i>
-        </button>
-
-        <button class="circular ui icon button" id="addContP">
-          <i class="icon plus"></i> <i class="icon ellipsis horizontal"></i>
-        </button>
-
-        <button class="circular ui icon button" id="sourcem">
-          <i class="icon code "></i>
-        </button>
-
-        <button class="circular ui icon button" id="sourcej">
-          <i class="icon code"></i>j
-        </button>
-
-        <button class="circular ui icon button" id="meteor">
-          <i class="icon code"></i>m
-        </button>
-
-        <button class="circular ui icon button" id="preview">
-          <i class="icon unhide"></i>
-        </button>
-
-        <br>
-
-        <div class="ui container">
-         
-        </div>
-
-        <div id="model-container" style="position:fixed;top:0px;right:200px;"></div>
-      </div>
-      {{> templateMenu}}
+      <iframe frameborder="0" scrolling="auto" src="/container/{{appname}}{{#if page}}/{{page}}{{/if}}" width="{{iwidth}}" height="{{iheight}}"></iframe>
+      
     </div>
 
+    {{> modaladd}}
+    
+  </div>  
+</template>
 
-    <div class="ui modal" id="modal">
+<template name="modaladd">
+  <div class="ui modal" id="modal">
     <div class="header"></div>
     <div class="content">
       <p>
@@ -77,91 +47,15 @@
         {{#if equals tt "framework"}}
         {{> insertFrameworkForm}}
         {{/if}}
-
-
       </p>
     </div>
     <div class="actions">
       <div class="ui approve button">Done</div>
-      
       <div class="ui cancel button">Cancel</div>
     </div>
   </div>
-
-
-
-  <div class="ui modal" id="code">
-    <div class="header">Source</div>
-    <div class="content">
-      <div>
-        <textarea style="width: 100%;">
-          {{source}}
-        </textarea>
-      </div>
-    </div>
-    <div class="actions">  
-      <div class="ui cancel button">Cancel</div>
-    </div>
-  </div>
-
-  <div class="ui modal" id="jsonsource">
-    <div class="header">Json Source</div>
-    <div class="content">
-      <div>
-        <textarea style="width: 100%;">
-          {{> jsonsource}}
-        </textarea>
-      </div>
-    </div>
-    <div class="actions">  
-      <div class="ui cancel button">Cancel</div>
-    </div>
-  </div>
-
-  <div class="ui modal" id="meteorsource">
-    <div class="header">Meteor.js Source</div>
-    <div class="content">
-      <div>
-        <textarea style="width: 100%;">
-          {{> meteorsource}}
-        </textarea>
-      </div>
-    </div>
-    <div class="actions">  
-      <div class="ui cancel button">Cancel</div>
-    </div>
-  </div>
-
-
-  </div>
-
- 
-
-  
 </template>
 
-<template name="Contain">
-
-  {{#each containers}}
-    <div id="{{_id}}" class="dropzone"><legend>{{name}}</legend>
-      {{#each this.instances}}
-        <div class="editable" id="c_{{_id}}">
-          {{{compiled}}}
-        </div>
-      {{/each}}
-        
-      <button class="item mini circular ui icon button upT">
-            <i class="icon small arrow up" id="u_{{_id}}"></i>
-          </button>
-      <button class="item mini circular ui icon button delT">
-            <i class="icon small minus" id="x_{{_id}}"></i>
-          </button>
-      <button class="item mini circular ui icon button downT">
-        <i class="icon small arrow down" id="d_{{_id}}"></i>
-      </button>
-    </div>
-  {{/each}}
-</template>
 
 <template name="listTemplates">
 
@@ -184,19 +78,12 @@
 
 <template name="listFrameworks">
   <select id="frameSel">
-  {{#each frameworks}}
-  <option value="{{this.root}}">{{this.name}}</option>
-
-  {{/each}}
-</select>
+    {{#each frameworks}}
+      <option value="{{this._id}}" data-root="{{this.root}}">{{this.name}}</option>
+    {{/each}}
+  </select>
 </template>
 
-
-<template name="templateMenu">
-  <div id="secSide">
-      <div id="listSee"></div>
-  </div>
-</template>
 
 
 <template name="listT">

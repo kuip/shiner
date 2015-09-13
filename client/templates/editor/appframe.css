@@ -1,0 +1,15 @@
+.stickybuttons {
+	position: fixed;
+	top: 0;
+}
+
+.stickytemps {
+	position: fixed;
+	bottom: 0;
+}
+
+#model-container {
+	position: fixed;
+	top: 0;
+	right: 200px;
+}

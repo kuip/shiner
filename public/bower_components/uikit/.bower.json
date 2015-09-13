@@ -1,0 +1,30 @@
+{
+  "name": "uikit",
+  "version": "2.22.0",
+  "homepage": "http://getuikit.com",
+  "main": [
+    "./dist/**/*.*"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9.0"
+  },
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "docs",
+    "vendor",
+    "server.js",
+    "composer.json",
+    "index.html"
+  ],
+  "_release": "2.22.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.22.0",
+    "commit": "49a7a3c4e23353efef7cae3f7fe27c7e9b064649"
+  },
+  "_source": "git://github.com/uikit/uikit.git",
+  "_target": "~2.22.0",
+  "_originalSource": "dev_uikit",
+  "_direct": true
+}

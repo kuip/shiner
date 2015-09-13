@@ -126,12 +126,12 @@ html,body {
   min-height: 50px;
   min-width: 50px;
 }
-
+/*
 #stage {
   position: absolute;
   width:80%;
   left:300px;
-}
+}*/
 
 #secSide {
   position: fixed;
@@ -149,4 +149,16 @@ html,body {
 
 .pusher {
   overflow: auto;
+}
+
+#splitter{
+    height: 1000px;
+    width: 100%; 
+    background-color: #fff;
+}
+.splitter-west{
+    background-color: #eee;
+}
+.splitter-east{
+    background-color: #fff;
 }

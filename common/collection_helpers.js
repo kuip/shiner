@@ -5,13 +5,13 @@ compileHelpers = function(data, help) {
     help[data[i].name] = data[i].value
     if (data[i].value.indexOf("|") !== -1){
     	help[data[i].name] = data[i].value.split("|")
-    	if (help[data[i].name][0].indexOf(":") !== -1){
+    	if (help[data[i].name][0].indexOf(":") !== -1 && help[data[i].name][0].indexOf("http") === -1){
     		for (ii in help[data[i].name]){
     			help[data[i].name][ii] = help[data[i].name][ii].split(":")
     		}
     	}
     }
-    else if (data[i].value.indexOf(":") !== -1){
+    else if (data[i].value.indexOf(":") !== -1 && data[i].value.indexOf("http") === -1){
     	help[data[i].name] = data[i].value.split(":")
     }
   }
@@ -110,7 +110,7 @@ Containers.helpers({
 		var self = this
 		self.instances = []
 		self.compiled = ''
-		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch();
+		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch()
     instances.forEach(function(ins){
       ins.compile() 
       self.instances.push(ins)
@@ -120,7 +120,7 @@ Containers.helpers({
 	jcompile: function() {
 		var self = this
 		self.jinstances = []
-		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch();
+		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch()
     instances.forEach(function(ins){
       ins.jcompile() 
       self.jinstances.push(ins.jcompiled)
@@ -130,11 +130,54 @@ Containers.helpers({
 		var self = this
 		self.minstances = []
 		self.integration = ''
-		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch();
+		self.content = ''
+		self.values = ''
+		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch()
     instances.forEach(function(ins){
       ins.mcompile() 
       self.minstances.push(ins.mcompiled)
+      self.content += ins.mcompiled.content + '\n\n'
+      self.values += ins.mcompiled.values + '\n\n'
       self.integration += '{{> i' + ins._id + '}}\n'
+    })
+	}
+})
+
+Pages.helpers({
+	compile: function() {
+		var self = this
+		self.containers = []
+		self.compiled = ''
+		var containers = Containers.find({page: this._id},{sort:{ordering:1}}).fetch()
+		containers.forEach(function(cont) {
+			cont.compile() 
+      self.containers.push(cont)
+      self.compiled += cont.compiled
+		})
+	},
+	jcompile: function() {
+		var self = this
+		self.jcontainers = []
+		var containers = Containers.find({page: this._id},{sort:{ordering:1}}).fetch()
+		containers.forEach(function(cont) {
+      cont.jcompile() 
+      self.jcontainers = self.jcontainers.concat(cont.jinstances)
+    })
+    self.jcompiled = JSON.stringify(self.jcontainers)
+	},
+	mcompile: function() {
+		var self = this
+		self.mcontainers = []
+		self.content = ''
+		self.values = ''
+		self.integration = ''
+		var containers = Containers.find({page: this._id},{sort:{ordering:1}}).fetch()
+    containers.forEach(function(cont) {
+      cont.mcompile() 
+      self.mcontainers = self.mcontainers.concat(cont.minstances)
+      self.content += cont.content + '\n\n'
+      self.values += cont.values + '\n\n'
+      self.integration += cont.integration
     })
 	}
 })

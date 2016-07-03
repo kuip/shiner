@@ -11,7 +11,7 @@ FlowRouter.route('/form', {
 	}
 })
 
-FlowRouter.route('/preview/:app', {
+FlowRouter.route('/preview/:app/:page?', {
 	action: function() {
 		BlazeLayout.render('layout', {main: "preview", headers: "headers"})
 	}

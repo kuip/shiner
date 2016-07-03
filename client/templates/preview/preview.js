@@ -1,16 +1,23 @@
-Template.preview.onRendered(function() {
-	$("head").append('<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.js">');
-	$("head").append('<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css">');
-})
-
 Template.preview.helpers({
   html_out: function() {
-    var containers = Containers.find({app: FlowRouter.getParam('app')},{sort:{ordering:1}}).fetch();
-    var out = ''
-    containers.forEach(function(container) {
-      container.compile()
-      out += container.compiled
-    })
+    if(FlowRouter.getParam('page')) {
+      var page = Pages.findOne({app: FlowRouter.getParam('app'), name: FlowRouter.getParam('page')})
+      if(page) {
+        page.compile()
+        return page.compiled
+      }
+    }
+    else {
+      var pages = Pages.find({app: FlowRouter.getParam('app')}).fetch()
+      var html = ''
+      _.each(pages, function(page) {
+        page.compile()
+        html += page.compiled
+      })
+
+      return html
+    }
+    
     Meteor.setTimeout(function() {
       $('.ui.dropdown').dropdown()
       $('.ui.embed').embed()

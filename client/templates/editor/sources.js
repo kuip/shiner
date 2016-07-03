@@ -12,7 +12,7 @@ Template.source.onRendered(function() {
     var page = FlowRouter.getParam('page')
     console.log(page)
     if(page) {
-      var pg = Pages.findOne({name: page})
+      var pg = Pages.findOne({name: page, app: FlowRouter.getParam('app')})
       console.log(pg)
       if(pg)
         Session.set('page', pg._id)

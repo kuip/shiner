@@ -1,6 +1,7 @@
 FlowRouter.route('/', {
 	action: function() {
-		BlazeLayout.render('layout', {main: "home", headers: "headers"})
+		//BlazeLayout.render('layout', {main: "home", headers: "headers"})
+		BlazeLayout.render('layout', {main: "bodyCont", headers: "headers"})
 	}
 })
 

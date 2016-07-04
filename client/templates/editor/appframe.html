@@ -20,15 +20,15 @@
 
 <template name="buttons">
   <a class="circular ui icon" id="addCont">
-    <i class="icon plus"></i>
+    +
   </a>
 
   <a class="circular ui icon" id="addContP">
-    <i class="icon ellipsis horizontal"></i>
+    +P
   </a>
 
   <a class="circular ui icon" href="/source/html/{{appname}}/{{page}}" target="_blank">
-    <i class="icon code "></i>
+    &lt;&gt;
   </a>
 
   <a class="circular ui icon" href="/source/json/{{appname}}/{{page}}" target="_blank">
@@ -40,7 +40,7 @@
   </a>
 
   <a class="circular ui icon" href="/preview/{{appname}}/{{page}}" target="_blank">
-    <i class="icon unhide"></i>
+    see
   </a>
 
   <div class="pagelinks">
@@ -64,14 +64,14 @@
         </div>
       {{/each}}
         
-      <button class="item mini circular ui icon button upT">
-            <i class="icon small arrow up" id="u_{{_id}}"></i>
+      <button class="item mini circular ui icon button upT" id="u_{{_id}}">
+            up
           </button>
-      <button class="item mini circular ui icon button delT">
-            <i class="icon small minus" id="x_{{_id}}"></i>
+      <button class="item mini circular ui icon button delT" id="x_{{_id}}">
+            -
           </button>
-      <button class="item mini circular ui icon button downT">
-        <i class="icon small arrow down" id="d_{{_id}}"></i>
+      <button class="item mini circular ui icon button downT" id="d_{{_id}}">
+        d
       </button>
     </div>
   {{/each}}

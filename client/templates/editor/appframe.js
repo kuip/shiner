@@ -56,7 +56,7 @@ Template.Contain.events({
   "mouseenter .editable": function(ev, inst){
     var div = $(ev.target)
     var id_part = div[0].id.substring(2)
-    div.append('<div class="ed"><button class="item mini circular ui icon button blue upI"><i class="icon small arrow left" id="u_'+id_part +'"></i></button><button class="item mini circular ui icon button blue optI"><i class="icon small options" id="o_'+id_part +'"></i></button><button class="item mini circular ui icon button red delI"><i class="icon small minus" id="x_'+id_part +'"></i></button><button class="item mini circular ui icon button blue downI"><i class="icon small arrow right" id="d_'+id_part +'"></i></button></div>')
+    div.append('<div class="ed"><button class="item mini circular ui icon button blue upI" id="u_'+id_part +'">&lt;</button><button class="item mini circular ui icon button blue optI" id="o_'+id_part +'">opt</button><button class="item mini circular ui icon button red delI" id="x_'+id_part +'">-</button><button class="item mini circular ui icon button blue downI" id="d_'+id_part +'">&gt;</button></div>')
   },
   "mouseleave .editable": function(ev, inst){
     var div = ev.target

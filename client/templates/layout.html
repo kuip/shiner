@@ -1,4 +1,27 @@
+<head>
+  <title>shiner</title>
+<!--   <link rel="stylesheet" type="text/css" class="ui" href="/bower_components/split-pane/split-pane.css">
+  <script src="/bower_components/split-pane/split-pane.js"></script> -->
+  <link rel="stylesheet" href="/bower_components/zino-splitter/themes/silver/zino.core.css">
+<link rel="stylesheet" href="/bower_components/zino-splitter/themes/silver/zino.splitter.css">
+<script src="/bower_components/zino-splitter/zino.position.min.js"></script>
+<script src="/bower_components/zino-splitter/zino.draggable.min.js"></script>
+<script src="/bower_components/zino-splitter/zino.splitter.min.js"></script>
+</head>
+
 <template name="layout">
 	{{> Template.dynamic template=headers}}
   {{> Template.dynamic template=main}}
+</template>
+
+
+<template name="headers">
+  {{#with header}}
+    {{#each this.css}}
+      <link rel="stylesheet" type="text/css" href="{{this}}">
+    {{/each}} 
+    {{#each this.js}}
+      <script src="{{this}}"></script>
+    {{/each}}
+  {{/with}}
 </template>

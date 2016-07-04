@@ -24,9 +24,6 @@ deps@1.0.7
 ejson@1.0.6
 fabienb4:autoform-semantic-ui@0.4.6
 fastclick@1.0.3
-flemay:less-autoprefixer@1.1.0
-flemay:semantic-ui@1.0.1
-flemay:semantic-ui-data@1.0.0
 geojson-utils@1.0.3
 html-tools@1.0.4
 htmljs@1.0.4

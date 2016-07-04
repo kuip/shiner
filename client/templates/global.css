@@ -1,0 +1,15 @@
+html,body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#__blaze-root {
+  height: 100%;
+  width: 99%;
+}
+
+
+.shiner-dark {
+  background-color: #BCBEC0;
+}

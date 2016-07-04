@@ -1,8 +1,8 @@
 /* CSS declarations go here */
 
-html,body {
+/*html,body {
   overflow:visible;
-}
+}*/
 
 #drag-1, #drag-2 {
   width: 25%;
@@ -126,12 +126,7 @@ html,body {
   min-height: 50px;
   min-width: 50px;
 }
-/*
-#stage {
-  position: absolute;
-  width:80%;
-  left:300px;
-}*/
+
 
 #secSide {
   position: fixed;
@@ -152,13 +147,31 @@ html,body {
 }
 
 #splitter{
-    height: 1000px;
+    height: 100%;
     width: 100%; 
-    background-color: #fff;
 }
 .splitter-west{
-    background-color: #eee;
+  background-color: #eee;
+  padding-left: 5px;
 }
+
 .splitter-east{
-    background-color: #fff;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+.sh-prev-cont {
+  background-color: #fff;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sh-menu {
+  display: block;
+  padding-left: 20px;
+  color: #4183C7;
 }

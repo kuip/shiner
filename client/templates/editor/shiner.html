@@ -1,16 +1,16 @@
 <template name="bodyCont">
-
-
   <div id="splitter">
     <div class="splitter-west">
-      <div class="item">
-        {{> listFrameworks}} 
-        <button class="circular ui icon button" id="addF">
-        <i class="icon plus"></i>
+      {{> listFrameworks}} 
+      <button class="circular ui icon button" id="addF">
+        +
       </button>
 
-      </div>
-      {{> listTemplates}} 
+      {{#if builder}}
+        {{> listTemplates children=children}}
+      {{else}}
+        {{> listTemplates children=apps showbtn="true"}}
+      {{/if}}
       <button class="circular ui icon button" id="addTT">
         <i class="icon ellipsis horizontal"></i> <i class="icon plus"></i>
       </button>
@@ -18,16 +18,53 @@
           <i class="icon edit"></i>
       </button>
 
+
     </div>
     <div class="splitter-east">
-      
-      <iframe frameborder="0" scrolling="auto" src="/container/{{appname}}{{#if page}}/{{page}}{{/if}}" width="{{iwidth}}" height="{{iheight}}"></iframe>
+      {{#if appname}}
+        {{#if builder}}
+          <iframe frameborder="0" scrolling="auto" src="/container/{{appname}}{{#if page}}/{{page}}{{/if}}" width="{{iwidth}}" height="{{iheight}}"></iframe>
+        {{else}}
+          <div class="sh-prev-cont" style="width:{{prevwidth}}px !important; height:{{prevheight}}px !important;">
+            <iframe frameborder="0" scrolling="auto" src="/preview/{{appname}}{{#if page}}/{{page}}{{/if}}{{#if fr}}?fr={{fr}}{{/if}}" width="{{prevwidth}}" height="{{prevheight}}"></iframe>
+          </div>
+        {{/if}}
+      {{/if}}
       
     </div>
 
     {{> modaladd}}
     
   </div>  
+</template>
+
+<template name="listTemplates">
+  {{#each children}}
+    {{#if hasChildren }}
+      <div class="item">
+      <div class="header"  id="{{_id}}">{{name}}</div>
+      <div class="sh-menu">
+        {{> Template.dynamic template="listTemplates" data=this }}  
+      </div>
+        </div>
+    {{else}}
+      <div class="item" id="{{_id}}">
+        {{name}}
+        {{#if showbtn}}
+          <button class="sh-btn">-></button>
+        {{/if}}
+      </div>
+    {{/if}}
+  {{/each}}
+</template>
+
+
+<template name="listFrameworks">
+  <select id="frameSel">
+    {{#each frameworks}}
+      <option value="{{this._id}}" data-root="{{this.root}}">{{this.name}}</option>
+    {{/each}}
+  </select>
 </template>
 
 <template name="modaladd">
@@ -54,58 +91,4 @@
       <div class="ui cancel button">Cancel</div>
     </div>
   </div>
-</template>
-
-
-<template name="listTemplates">
-
-  {{#each templates.children}}
-
-    {{#if hasChildren }}
-      <div class="item">
-      <div class="header"  id="{{_id}}">{{name}}</div>
-      <menu>
-        {{> Template.dynamic template="listT" data=this }}  
-      </menu>
-        </div>
-    {{else}}
-      <a class="item" id="{{_id}}">{{name}}</a>
-    {{/if}}
-
-  {{/each}}
-</template>
-
-
-<template name="listFrameworks">
-  <select id="frameSel">
-    {{#each frameworks}}
-      <option value="{{this._id}}" data-root="{{this.root}}">{{this.name}}</option>
-    {{/each}}
-  </select>
-</template>
-
-
-
-<template name="listT">
-  {{#each this.children}}
-  
-    {{#if hasChildren }}
-      <div class="item">
-      <div class="header"  id="{{_id}}">{{name}} 
-        
-
-      </div>
-        <menu>
-        {{> Template.dynamic template="listT" data=this }}
-        </menu>
-      </div>
-    {{else}}
-      <a class="item" id="{{_id}}">{{name}}</a>
-    {{/if}}
-  
-  {{/each}}
-</template>
-
-<template name="singleT">
-    
 </template>

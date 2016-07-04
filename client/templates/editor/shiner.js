@@ -1,13 +1,9 @@
 Template.bodyCont.onCreated(function(){
+  console.log('bodyCont created')
   Session.set('tt', true)
   Session.set('framework', 'hNyLNW3sAFSuwPR8L') //semantic
-
-  Session.set('appQuery', {});
-  this.autorun(function() {
-    var app = FlowRouter.getParam('app');
-    if(app)
-      Session.set('appQuery', {app: app})
-  })
+  this.app = new ReactiveVar();
+  this.page = new ReactiveVar();
 })
 
 delta = 10
@@ -23,7 +19,6 @@ Template.bodyCont.onRendered(function(){
         resize: function (ev, ui) {
           var win = Session.get('window')
           win.offset = $('.zui-splitter-separator').position().left
-          console.log(win.offset)
           win.iw = win.w - win.offset - delta
           Session.set("window", win)
         }
@@ -36,16 +31,22 @@ Template.bodyCont.onRendered(function(){
     Session.set("window", win);
   });
 
+  $('body').addClass('shiner-dark')
 })
 
 
 Template.bodyCont.helpers({
+  fr: function() {
+    console.log('fr: ' + Session.get('framework'))
+    return Session.get('framework')
+  },
   appname: function() {
-    var app = Session.get('appQuery')
-    if(app)
-      return app.app
+    return FlowRouter.getParam('app') || Template.instance().app.get()
   },
   page: function() {
+    return FlowRouter.getParam('page') || Template.instance().page.get()
+  },
+  builder: function() {
     return FlowRouter.getParam('page')
   },
   iwidth: function() {
@@ -57,6 +58,66 @@ Template.bodyCont.helpers({
     var win = Session.get('window')
     if(win)
       return win.h
+  },
+  prevwidth: function() {
+    var win = Session.get('window')
+    if(win)
+      return win.iw * 0.7
+  },
+  prevheight: function() {
+    var win = Session.get('window')
+    if(win)
+      return win.h * 0.7
+  },
+  apps: function() {
+    var pages = Pages.find().fetch()
+    var apps = [], app
+    _.each(_.groupBy(pages, 'app'), function(pages, app) {
+      apps.push({name: app, children: pages, hasChildren: true})
+    })
+    if(apps.length && !Template.instance().page.get()) {
+      Template.instance().app.set(apps[0].name)
+      Template.instance().page.set(apps[0].children[0].name)
+    }
+    return apps
+  },
+  children: function(){
+    var templates = buildMap(Session.get('frameworkRoot'))
+    return templates.children
+  }
+})
+
+Template.bodyCont.events({
+  "click #addTT": function(ev, inst){
+    Session.set('tt', "template")
+    $("#modal").modal("show")
+  },
+  "click #addF": function(ev, inst){
+    Session.set('tt', "framework")
+    $("#modal").modal("show")
+  },
+  "click #editForm": function(ev, inst) {
+    window.open('/form', '_blank')
+  },
+  "click .item": function(ev , inst){
+    ev.stopPropagation();
+    if(FlowRouter.getParam('page')) {
+      seeThem(ev.target.id)
+
+      $('#secSide')
+      .sidebar('show')
+    }
+    else {
+      if(this.app) {
+        inst.app.set(this.app)
+        inst.page.set(this.name)
+      }
+      else
+        inst.app.set(this.name)
+    }
+  },
+  "click .sh-btn": function(ev, inst) {
+    window.open('/app/' + this.app + '/' + this.name, '_blank')
   }
 })
 
@@ -80,6 +141,7 @@ Template.listFrameworks.helpers({
            framework: $('#frameSel').val()
         };
         setIFrame(obj)
+        Session.set('framework', $('#frameSel').val())
       }
       Session.set('frameworkRoot', framew[0].root)
     }
@@ -89,42 +151,28 @@ Template.listFrameworks.helpers({
 
 Template.listFrameworks.events({
   "change #frameSel": function(ev, inst){
+    ev.stopPropagation();
     var obj = {
        framework: inst.$('#frameSel').val()
     };
-   setIFrame(obj)
-
+    setIFrame(obj)
+    Session.set('framework', $('#frameSel').val())
     Session.set('frameworkRoot', inst.$(ev.currentTarget).find('option:selected').data('root'))
   }
 })
 
-Template.bodyCont.events({
-  "click #addTT": function(ev, inst){
-    Session.set('tt', "template")
-    $("#modal").modal("show")
-  },
-  "click #addF": function(ev, inst){
-    Session.set('tt', "framework")
-    $("#modal").modal("show")
-  },
-  "click #editForm": function(ev, inst) {
-    window.open('/form', '_blank')
-  }
-})
 
 
 
 Template.listTemplates.helpers({
-  templates: function(){
-    return buildMap(Session.get('frameworkRoot'))
-    //return buildMap("GnomJs47NRMWixR9D")
-  },
+  showbtn: function() {
+    if(!FlowRouter.getParam('page'))
+      return true
+    return false
+  }
+})
 
-
-});
-
-
-Template.listTemplates.events({
+/*Template.listTemplates.events({
   "click .item": function(ev , inst){
     ev.stopPropagation();
     seeThem(ev.target.id)
@@ -132,4 +180,4 @@ Template.listTemplates.events({
     $('#secSide')
     .sidebar('show')
   }
-})
+})*/

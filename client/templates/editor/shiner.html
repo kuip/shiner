@@ -20,8 +20,8 @@
         {{#if builder}}
           <iframe frameborder="0" scrolling="auto" src="/container/{{appname}}{{#if page}}/{{page}}{{/if}}{{#if fr}}?fr={{fr}}{{/if}}" width="{{iwidth}}" height="{{iheight}}"></iframe>
         {{else}}
-          <div class="sh-prev-cont" style="width:{{prevwidth}}px !important; height:{{prevheight}}px !important;">
-            <iframe frameborder="0" scrolling="auto" src="/preview/{{appname}}{{#if page}}/{{page}}{{/if}}{{#if fr}}?fr={{fr}}{{/if}}" width="{{prevwidth}}" height="{{prevheight}}"></iframe>
+          <div class="sh-prev-cont">
+            <iframe frameborder="0" scrolling="auto" src="/preview/{{appname}}{{#if page}}/{{page}}{{/if}}{{#if fr}}?fr={{fr}}{{/if}}" width="{{iwidth}}" height="{{iheight}}"></iframe>
           </div>
         {{/if}}
       {{/if}}

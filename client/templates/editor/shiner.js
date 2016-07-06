@@ -7,6 +7,17 @@ Template.bodyCont.onCreated(function(){
 
 delta = 10
 
+setWin = function(offset) {
+  var win = Session.get('window')
+  win.w = window.innerWidth
+  win.h = window.innerHeight
+  if(offset)
+    win.offset = offset;
+  if(win.offset)
+    win.iw = win.w - win.offset - delta
+  Session.set("window", win);
+}
+
 Template.bodyCont.onRendered(function(){
   var offset = 150
   Session.set("window", {w: window.innerWidth, h: window.innerHeight, iw: window.innerWidth - offset - delta, offset: offset})
@@ -16,18 +27,12 @@ Template.bodyCont.onRendered(function(){
             { region: "east"}
         ],
         resize: function (ev, ui) {
-          var win = Session.get('window')
-          win.offset = $('.zui-splitter-separator').position().left
-          win.iw = win.w - win.offset - delta
-          Session.set("window", win)
+          setWin($('.zui-splitter-separator').position().left);
         }
     });
 
   $(window).resize(function(evt) {
-    var win = Session.get('window')
-    win.w = window.innerWidth
-    win.h = window.innerHeight
-    Session.set("window", win);
+    setWin();
   });
 
   $('body').addClass('shiner-dark')
@@ -56,16 +61,6 @@ Template.bodyCont.helpers({
     var win = Session.get('window')
     if(win)
       return win.h
-  },
-  prevwidth: function() {
-    var win = Session.get('window')
-    if(win)
-      return win.iw * 0.7
-  },
-  prevheight: function() {
-    var win = Session.get('window')
-    if(win)
-      return win.h * 0.7
   },
   apps: function() {
     var pages = Pages.find().fetch()

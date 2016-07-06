@@ -3,16 +3,6 @@ setIFrame = function(obj) {
   win.postMessage(JSON.stringify(obj), "*");
 }
 
-makeid = function makeid(len)
-{
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < len; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
 
 buildMap = function buildMap(id){
   var out = Templates.findOne(id)

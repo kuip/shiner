@@ -30,6 +30,7 @@ Meteor.methods({
         var cont = Containers.findOne({_id: id});
         var clone = JSON.parse(JSON.stringify(cont));
         delete clone._id;
+        clone.name = "templ_"+makeid(3);
         var insts  = Containers.find({page: cont.page}).count();
         clone.ordering = insts +1;
         //console.log(clone);

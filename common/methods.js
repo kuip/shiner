@@ -10,7 +10,6 @@ Meteor.methods({
         console.log(pagename)
         console.log(appname)
         var pageId
-
         if(pagename && appname) {
             check(pagename, String)
             pageId = Pages.insert({name: pagename, app: appname})
@@ -23,8 +22,32 @@ Meteor.methods({
         //alert(insts)
 
         par.ordering = insts +1
-        console.log(par)
         Containers.insert(par)
+    },
+    cloneContainer: function(id) {
+        check(id, String);
+        //console.log(id);
+        var cont = Containers.findOne({_id: id});
+        var clone = JSON.parse(JSON.stringify(cont));
+        delete clone._id;
+        var insts  = Containers.find({page: cont.page}).count();
+        clone.ordering = insts +1;
+        //console.log(clone);
+        Containers.insert(clone, function(err, newid) {
+            if(err)
+                throw new Meteor.Error('container not inserted');
+            //console.log('newid :' + newid)
+            Instances.find({container: id}).forEach(function(i) {
+                var inst = JSON.parse(JSON.stringify(i));
+                delete inst._id;
+                inst.container = newid;
+                Instances.insert(inst, function(err, res) {
+                    if(err)
+                        throw new Meteor.Error('instance not inserted')
+                    console.log(res);
+                });
+            });
+        });
     },
     moveContainer: function(id,by){
         check(id, String)
@@ -58,11 +81,8 @@ Meteor.methods({
     },
     insertInstance: function(par){
         check(par, Object)
-
         var templateId = par.container
         var insts  = Instances.find({container: templateId}).count()
-        //alert(insts)
-
         par.ordering = insts +1;
         //console.log(par)
         Instances.insert(par)

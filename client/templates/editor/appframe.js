@@ -82,6 +82,11 @@ Template.Contain.events({
     Meteor.call("moveInstance" , instanceId, -1, this.container)
 
   },
+  "click .cloneI": function(ev, inst) {
+    var obj = Object.assign({}, this);
+    delete obj._id;
+    Meteor.call("insertInstance", obj);
+  },
   "click .downI":function(ev, inst){
     //right, up ordering
     var instanceId = this._id
@@ -100,6 +105,9 @@ Template.Contain.events({
     //right, up ordering
     var templId = this._id
     Meteor.call("moveContainer" , templId, 1)
+  },
+  "click .cloneT": function(ev, inst){
+    Meteor.call('cloneContainer', this._id)
   },
 })
 

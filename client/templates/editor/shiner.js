@@ -98,6 +98,8 @@ Template.bodyCont.events({
     window.open('/form', '_blank')
   },
   "click .sh-item": function(ev , inst){
+    if(!$(ev.target).is('span'))
+      return
     ev.stopPropagation();
     if(FlowRouter.getParam('page')) {
       seeThem(ev.target.id)
@@ -112,8 +114,14 @@ Template.bodyCont.events({
         inst.app.set(this.name)
     }
   },
-  "click .sh-btn": function(ev, inst) {
+  "click .toPage": function(ev, inst) {
     window.open('/app/' + this.app + '/' + this.name, '_blank')
+  },
+  "click .delPage": function(ev, inst) {
+    Meteor.call('deletePage', this._id);
+  },
+  "click .delApp": function(ev, inst) {
+    Meteor.call('deleteApp', this.name);
   }
 })
 

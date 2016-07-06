@@ -28,7 +28,7 @@
       
     </div>
 
-    {{> modaladd}}
+    <!--{{> modaladd}}-->
     
   </div>  
 </template>
@@ -37,16 +37,22 @@
   {{#each children}}
     {{#if hasChildren }}
       <div class="sh-item">
-      <div class="sh-header"  id="{{_id}}">{{name}}</div>
-      <div class="sh-submenu">
-        {{> Template.dynamic template="listTemplates" data=this }}  
-      </div>
+        <div class="sh-header" id="{{_id}}">
+          <span>{{name}}</span>
+          {{#if showbtn}}
+            <button class="sh-btn delApp">➖</button>
+          {{/if}}
         </div>
+        <div class="sh-submenu">
+          {{> Template.dynamic template="listTemplates" data=this }}  
+        </div>
+      </div>
     {{else}}
       <div class="sh-item point" id="{{_id}}">
-        {{name}}
+        <span>{{name}}</span>
         {{#if showbtn}}
-          <button class="sh-btn">-></button>
+          <button class="sh-btn delPage">➖</button>
+          <button class="sh-btn toPage">➚</button>
         {{/if}}
       </div>
     {{/if}}

@@ -121,8 +121,30 @@ Meteor.methods({
             Instances.update({_id:next._id},{$set:{ordering:cont.ordering}})
             Instances.update({_id:cont._id},{$set:{ordering:ord}})
         }
-    }
+    },
+    deletePage: function(id) {
+        check(id, String)
+        console.log('page: ' + id)
+        var page = Pages.findOne(id);
 
+        // delete all containers and instances
+        Containers.find({page: page}).forEach(function(c) {
+            console.log('c: ' + c._id)
+            Instances.find({container: c._id}).forEach(function(i) {
+                console.log('i: ' + i._id);
+                Instances.remove(i._id);
+            })
+            Containers.remove(c._id);
+        }); 
+        Pages.remove(id);
+    },
+    deleteApp: function(name) {
+        check(name, String)
+        console.log('app: ' + name)
+        Pages.find({app: name}).forEach(function(p) {
+            Meteor.call('deletePage', p._id);
+        });
+    }
 })
 
 

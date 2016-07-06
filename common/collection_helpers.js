@@ -134,10 +134,11 @@ Containers.helpers({
 		self.values = ''
 		instances = Instances.find({container: this._id},{sort:{ordering:1}}).fetch()
     instances.forEach(function(ins){
+      console.log('mcompile')
       ins.mcompile() 
       self.minstances.push(ins.mcompiled)
-      self.content += ins.mcompiled.content + '\n\n'
-      self.values += ins.mcompiled.values + '\n\n'
+      self.content += ins.mcompiled.content //+ '\n\n'
+      self.values += ins.mcompiled.values //+ '\n\n'
       self.integration += '{{> i' + ins._id + '}}\n'
     })
 	}
@@ -175,8 +176,8 @@ Pages.helpers({
     containers.forEach(function(cont) {
       cont.mcompile() 
       self.mcontainers = self.mcontainers.concat(cont.minstances)
-      self.content += cont.content + '\n\n'
-      self.values += cont.values + '\n\n'
+      self.content += cont.content //+ '\n\n'
+      self.values += cont.values //+ '\n\n'
       self.integration += cont.integration
     })
 	}

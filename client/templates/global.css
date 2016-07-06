@@ -4,6 +4,10 @@ html,body {
   margin: 0;
 }
 
+body {
+  font-family: Sans-serif;
+}
+
 #__blaze-root {
   height: 100%;
   width: 99%;
@@ -36,8 +40,20 @@ html,body {
   transform: translateY(-50%);
 }
 
+.sh-item {
+  padding-top: 5px;
+}
+
 .sh-menu {
+  padding-bottom: 20px;
+}
+
+.sh-submenu {
   display: block;
   padding-left: 20px;
   color: #4183C7;
+}
+
+.sh-group {
+  padding-top: 5px;
 }

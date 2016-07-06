@@ -1,5 +1,4 @@
 setIFrame = function(obj) {
-  console.log(obj)
   var win = document.getElementsByTagName('iframe')[0].contentWindow;
   win.postMessage(JSON.stringify(obj), "*");
 }

@@ -3,20 +3,17 @@
     <div class="splitter-west">
       {{> listFrameworks}} 
       <a class="point" id="addF">+</a>
-
-      {{#if builder}}
-        {{> listTemplates children=children}}
-      {{else}}
-        {{> listTemplates children=apps showbtn="true"}}
-      {{/if}}
-      <button class="circular ui icon button" id="addTT">
-        <i class="icon ellipsis horizontal"></i> <i class="icon plus"></i>
-      </button>
-      <button class="circular ui icon button" id="editForm">
-          <i class="icon edit"></i>
-      </button>
-
-
+      <div class="flex sh-group">
+        <button class="sh-btn" id="addTT">✚</button>
+        <button class="sh-btn" id="editForm">✎</button>
+      </div>
+      <div class="sh-menu">
+        {{#if builder}}
+          {{> listTemplates children=children}}
+        {{else}}
+          {{> listTemplates children=apps showbtn="true"}}
+        {{/if}}
+      </div>
     </div>
     <div class="splitter-east">
       {{#if appname}}
@@ -39,14 +36,14 @@
 <template name="listTemplates">
   {{#each children}}
     {{#if hasChildren }}
-      <div class="item">
-      <div class="header"  id="{{_id}}">{{name}}</div>
-      <div class="sh-menu">
+      <div class="sh-item">
+      <div class="sh-header"  id="{{_id}}">{{name}}</div>
+      <div class="sh-submenu">
         {{> Template.dynamic template="listTemplates" data=this }}  
       </div>
         </div>
     {{else}}
-      <div class="item point" id="{{_id}}">
+      <div class="sh-item point" id="{{_id}}">
         {{name}}
         {{#if showbtn}}
           <button class="sh-btn">-></button>

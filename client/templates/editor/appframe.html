@@ -49,21 +49,15 @@
 
   {{#each containers}}
     <div id="{{_id}}" class="dropzone"><legend>{{name}}</legend>
+      <button class="sh-btn upT" id="u_{{_id}}">⇧</button>
+      <button class="sh-btn downT" id="d_{{_id}}">⇩</button>
+      <button class="sh-btn delT" id="x_{{_id}}">➖</button>
+      <button class="sh-btn cloneT" id="c_{{_id}}">⚫</button>
       {{#each this.instances}}
         <div class="editable" id="c_{{_id}}">
           {{{compiled}}}
         </div>
       {{/each}}
-        
-      <button class="item mini circular ui icon button upT" id="u_{{_id}}">
-            up
-          </button>
-      <button class="item mini circular ui icon button delT" id="x_{{_id}}">
-            -
-          </button>
-      <button class="item mini circular ui icon button downT" id="d_{{_id}}">
-        d
-      </button>
     </div>
   {{/each}}
 </template>

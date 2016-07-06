@@ -97,13 +97,11 @@ Template.bodyCont.events({
   "click #editForm": function(ev, inst) {
     window.open('/form', '_blank')
   },
-  "click .item": function(ev , inst){
+  "click .sh-item": function(ev , inst){
     ev.stopPropagation();
     if(FlowRouter.getParam('page')) {
       seeThem(ev.target.id)
-
-      $('#secSide')
-      .sidebar('show')
+      //$('#secSide').sidebar('show')
     }
     else {
       if(this.app) {
@@ -169,13 +167,3 @@ Template.listTemplates.helpers({
     return false
   }
 })
-
-/*Template.listTemplates.events({
-  "click .item": function(ev , inst){
-    ev.stopPropagation();
-    seeThem(ev.target.id)
-
-    $('#secSide')
-    .sidebar('show')
-  }
-})*/

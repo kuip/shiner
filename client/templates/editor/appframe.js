@@ -7,6 +7,7 @@ Template.container.onCreated(function() {
 
 Template.container.onRendered(function() {
   Session.set('tt', true)
+  Session.set('chosenTemplates', '')
 
   window.onmessage = function(e) {
     if (e.origin.indexOf('localhost') === -1 && e.origin.indexOf('orobo.go.ro') === -1)
@@ -14,15 +15,22 @@ Template.container.onRendered(function() {
     if(e.data.indexOf('framework') === 2) {
       var payload = JSON.parse(e.data);
       if(payload)
-        Session.setPersistent('framework', payload.framework)
+        Session.set('framework', payload.framework)
     }
     if(e.data.indexOf('out') === 2) {
       var payload = JSON.parse(e.data);
       if(payload)
-        Session.setPersistent('chosenTemplates', payload.out)
+        Session.set('chosenTemplates', payload.out)
     }
   }
+
+  // removes templates from drag zone
+  document.body.addEventListener('click', function(e) {
+    if(e.target.getAttribute('id') == '__blaze-root')
+      Session.set('chosenTemplates', '')
+  })
 })
+
 
 Template.Contain.onRendered(function() {
   Session.set('appQuery', {});
@@ -62,7 +70,7 @@ Template.Contain.events({
   "mouseenter .editable": function(ev, inst){
     var div = $(ev.target)
     var id_part = div[0].id.substring(2)
-    div.append('<div class="ed"><button class="item mini circular ui icon button blue upI" id="u_'+id_part +'">&lt;</button><button class="item mini circular ui icon button blue optI" id="o_'+id_part +'">opt</button><button class="item mini circular ui icon button red delI" id="x_'+id_part +'">-</button><button class="item mini circular ui icon button blue downI" id="d_'+id_part +'">&gt;</button></div>')
+    div.append('<div class="ed"><button class="sh-btn upI" id="u_'+id_part +'">&lt;</button><button class="sh-btn optI" id="o_'+id_part +'">opt</button><button class="sh-btn delI" id="x_'+id_part +'">-</button><button class="sh-btn downI" id="d_'+id_part +'">&gt;</button><button class="sh-btn cloneI" id="c_'+id_part +'">=</button><button class="sh-btn htmlI" id="h_'+id_part +'"><></button></div>')
   },
   "mouseleave .editable": function(ev, inst){
     var div = ev.target

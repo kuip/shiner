@@ -16,7 +16,7 @@
 }
 
 #stage {
-  margin-right: 40px;
+  margin-left: 25px;
 }
 
 #secSide {
@@ -35,3 +35,53 @@
 .drag-drop {
   background-color: #F2F2F2 !important;
 }
+
+
+.delT, .upT, .downT, .cloneT {
+  position: absolute;
+  left: -30px;
+}
+.delT {
+  bottom: 30px;
+}
+.upT {
+  top: 0px;
+}
+.downT {
+  bottom: -0px;
+}
+.cloneT {
+  bottom: 60px;
+}
+
+
+.delI, .upI, .downI, .optI, .cloneI, .htmlI {
+  position: absolute;
+  top: -15px;
+  z-index: 1999;
+}
+.delI {
+  right: -5px;
+  top: 45px;
+}
+.optI {
+  left: -5px;
+  top: 45px;
+}
+.upI {
+  left: -5px;
+}
+.downI {
+  right: -6px;
+}
+.cloneI {
+  right: -6px;
+  top: 15px;
+}
+.htmlI {
+  left: -5px;
+  top: 15px;
+}
+
+
+

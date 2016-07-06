@@ -1,6 +1,6 @@
 Template.bodyCont.onCreated(function(){
   Session.set('tt', true)
-  Session.set('framework', 'hNyLNW3sAFSuwPR8L') //semantic
+  Session.set('iframeFramework', 'hNyLNW3sAFSuwPR8L') //semantic
   this.app = new ReactiveVar();
   this.page = new ReactiveVar();
 })
@@ -36,7 +36,7 @@ Template.bodyCont.onRendered(function(){
 
 Template.bodyCont.helpers({
   fr: function() {
-    return Session.get('framework')
+    return Session.get('iframeFramework')
   },
   appname: function() {
     return FlowRouter.getParam('app') || Template.instance().app.get()
@@ -139,7 +139,7 @@ Template.listFrameworks.helpers({
            framework: $('#frameSel').val()
         };
         setIFrame(obj)
-        Session.set('framework', $('#frameSel').val())
+        Session.set('iframeFramework', $('#frameSel').val())
       }
       Session.set('frameworkRoot', framew[0].root)
     }
@@ -154,7 +154,7 @@ Template.listFrameworks.events({
        framework: inst.$('#frameSel').val()
     };
     setIFrame(obj)
-    Session.set('framework', $('#frameSel').val())
+    Session.set('iframeFramework', $('#frameSel').val())
     Session.set('frameworkRoot', inst.$(ev.currentTarget).find('option:selected').data('root'))
   }
 })

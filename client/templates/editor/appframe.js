@@ -1,10 +1,16 @@
+Template.container.onCreated(function() {
+  this.autorun(function() {
+    var fr = FlowRouter.getQueryParam('fr')
+    Session.set('framework', fr)
+  })
+})
+
 Template.container.onRendered(function() {
   Session.set('tt', true)
 
   window.onmessage = function(e) {
     if (e.origin.indexOf('localhost') === -1 && e.origin.indexOf('orobo.go.ro') === -1)
       return;
-
     if(e.data.indexOf('framework') === 2) {
       var payload = JSON.parse(e.data);
       if(payload)

@@ -36,8 +36,6 @@ body {
   margin: auto;
   overflow: hidden;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .sh-item {

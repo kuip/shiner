@@ -4,6 +4,11 @@
   overflow:visible;
 }*/
 
+body {
+  margin-left: 0;
+  margin-top: -15px;
+}
+
 #drag-1, #drag-2 {
   width: 25%;
   height: 100%;
@@ -128,19 +133,6 @@
 }
 
 
-#secSide {
-  position: fixed;
-  bottom: 0px;
-  left: 210px;
-  z-index: 999;
-  max-height: 60%;
-  max-width: 87%;
-  overflow: scroll;
-}
-
-#listSee {
-  display: flex;
-}
 
 .pusher {
   overflow: auto;
@@ -156,22 +148,10 @@
 }
 
 .splitter-east{
-  width: 100% !important;
-  height: 100% !important;
+  /*width: 100% !important;
+  height: 100% !important;*/
 }
 
-
-.sh-prev-cont {
-  background-color: #fff;
-  margin: auto;
-  overflow: hidden;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.sh-menu {
-  display: block;
-  padding-left: 20px;
-  color: #4183C7;
+#addF {
+  padding-left: 5px;
 }

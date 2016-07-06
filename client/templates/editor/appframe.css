@@ -1,6 +1,7 @@
 .stickybuttons {
 	position: fixed;
 	top: 0;
+  margin-left: 5px;
 }
 
 .stickytemps {
@@ -16,4 +17,21 @@
 
 #stage {
   margin-right: 40px;
+}
+
+#secSide {
+  position: fixed;
+  bottom: 0px;
+  z-index: 999;
+  max-height: 250px;
+  max-width: 99%;
+  overflow: scroll;
+}
+
+#listSee {
+  display: flex;
+}
+
+.drag-drop {
+  background-color: #F2F2F2 !important;
 }

@@ -1,5 +1,4 @@
 Template.bodyCont.onCreated(function(){
-  console.log('bodyCont created')
   Session.set('tt', true)
   Session.set('framework', 'hNyLNW3sAFSuwPR8L') //semantic
   this.app = new ReactiveVar();
@@ -37,7 +36,6 @@ Template.bodyCont.onRendered(function(){
 
 Template.bodyCont.helpers({
   fr: function() {
-    console.log('fr: ' + Session.get('framework'))
     return Session.get('framework')
   },
   appname: function() {

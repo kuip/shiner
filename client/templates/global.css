@@ -13,3 +13,31 @@ html,body {
 .shiner-dark {
   background-color: #BCBEC0;
 }
+
+.sh-drop-item {
+
+}
+
+
+.sh.padr10 {
+  padding-right: 10px;
+}
+
+.point {
+  cursor: pointer;
+}
+
+.sh-prev-cont {
+  background-color: #fff;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sh-menu {
+  display: block;
+  padding-left: 20px;
+  color: #4183C7;
+}

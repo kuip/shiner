@@ -19,33 +19,24 @@
 </template>
 
 <template name="buttons">
-  <a class="circular ui icon" id="addCont">
-    +
-  </a>
+  <a class="sh point padr10" id="addCont">+</a>
+  <a class="sh point padr10" id="addContP">+P</a>
 
-  <a class="circular ui icon" id="addContP">
-    +P
-  </a>
-
-  <a class="circular ui icon" href="/source/html/{{appname}}/{{page}}" target="_blank">
+  <a class="sh padr10" href="/source/html/{{appname}}/{{page}}" target="_blank">
     &lt;&gt;
   </a>
-
-  <a class="circular ui icon" href="/source/json/{{appname}}/{{page}}" target="_blank">
+  <a class="sh padr10" href="/source/json/{{appname}}/{{page}}" target="_blank">
     json
   </a>
-
-  <a class="circular ui icon" href="/source/meteor/{{appname}}/{{page}}" target="_blank">
+  <a class="sh padr10" href="/source/meteor/{{appname}}/{{page}}" target="_blank">
     meteor
   </a>
-
-  <a class="circular ui icon" href="/preview/{{appname}}/{{page}}" target="_blank">
-    see
+  <a class="sh padr10" href="/preview/{{appname}}/{{page}}" target="_blank">
+    preview
   </a>
-
   <div class="pagelinks">
     {{#each pagelinks}}
-      <a class="circular ui icon" href="/container/{{appname}}/{{this.name}}">{{this.name}}</a>
+      <a class="sh padr10" href="/container/{{appname}}/{{this.name}}">{{this.name}}</a>
     {{/each}}
   </div>
 

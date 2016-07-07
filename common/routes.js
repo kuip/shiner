@@ -39,3 +39,9 @@ FlowRouter.route('/container/:app/:page?', {
 		BlazeLayout.render('layout', {main: "container", headers: "headers"})
 	}
 })
+
+FlowRouter.route('/edit/:template', {
+	action: function() {
+		BlazeLayout.render('layout', {main: "editTemplate", headers: "headers"})
+	}
+})

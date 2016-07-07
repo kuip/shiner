@@ -100,6 +100,9 @@ Template.Contain.events({
     var instanceId = this._id
     Meteor.call("moveInstance" , instanceId, 1, this.container)
   },
+  "click .htmlI": function(ev, inst) {
+    window.open('/edit/'+ this.templateId + '?fr=hNyLNW3sAFSuwPR8L', '_blank');
+  },
   "click .delT":function(ev, inst){
     var templId = this._id
     Meteor.call("deleteContainer" , templId)

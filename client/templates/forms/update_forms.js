@@ -21,6 +21,10 @@ Template.listTemplatesForm.events({
 	}
 })
 
+Template.editTemplate.onCreated(function() {
+	Session.set("templId", FlowRouter.getParam('template'));
+})
+
 
 Template.updateTemplateForm.helpers({
 	compiled: function(){

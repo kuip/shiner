@@ -128,6 +128,14 @@ Meteor.methods({
             Instances.update({_id:cont._id},{$set:{ordering:ord}})
         }
     },
+    insertPage: function(obj) {
+        check(obj, Object);
+        if(!obj.app)
+            throw new Meteor.Error('app is required');
+        if(!obj.name)
+            throw new Meteor.Error('name is required');
+        Pages.insert(obj);
+    },
     deletePage: function(id) {
         check(id, String)
         console.log('page: ' + id)

@@ -1,12 +1,13 @@
 <template name="bodyCont">
   <div id="splitter">
     <div class="splitter-west">
-      {{> listFrameworks}} 
-      <a class="point" id="addF">+</a>
       <div class="flex sh-group">
-        <button class="sh-btn" id="addTT">✚</button>
-        <button class="sh-btn" id="editForm">✎</button>
+        {{> listFrameworks}} 
+        <a class="point padr5" id="addF">+</a>
+        <a class="sh-btn padr5 point" id="addTT">✚</a>
+        <a class="sh-btn padr5 point" id="editForm">✎</a>
       </div>
+      <a class="sh-btn point padr5 addApp">✚</a>
       <div class="sh-menu">
         {{#if builder}}
           {{> listTemplates children=children}}
@@ -40,7 +41,8 @@
         <div class="sh-header" id="{{_id}}">
           <span>{{name}}</span>
           {{#if showbtn}}
-            <button class="sh-btn delApp">➖</button>
+            <a class="sh-btn point padr5 delApp">➖</a>
+            <a class="sh-btn point padr5 addPage">✚</a>
           {{/if}}
         </div>
         <div class="sh-submenu">
@@ -51,8 +53,8 @@
       <div class="sh-item point" id="{{_id}}">
         <span>{{name}}</span>
         {{#if showbtn}}
-          <button class="sh-btn delPage">➖</button>
-          <button class="sh-btn toPage">➚</button>
+          <a class="sh-btn point padr5 delPage">➖</a>
+          <a class="sh-btn point padr5 toPage">➚</a>
         {{/if}}
       </div>
     {{/if}}

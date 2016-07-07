@@ -97,7 +97,7 @@ Template.bodyCont.events({
       return
     ev.stopPropagation();
     if(FlowRouter.getParam('page')) {
-      seeThem(ev.target.id)
+      seeThem(ev.currentTarget.id)
       //$('#secSide').sidebar('show')
     }
     else {
@@ -117,6 +117,12 @@ Template.bodyCont.events({
   },
   "click .delApp": function(ev, inst) {
     Meteor.call('deleteApp', this.name);
+  },
+  "click .addPage": function(ev, inst) {
+    Meteor.call('insertPage', {app: this.name, name: 'page_' + makeid(3)});
+  },
+  "click .addApp": function(ev, inst) {
+    Meteor.call('insertPage', {app: 'app_' + makeid(3), name: 'page_' + makeid(3)});
   }
 })
 

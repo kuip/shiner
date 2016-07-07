@@ -23,8 +23,12 @@ body {
 }
 
 
-.sh.padr10 {
+.padr10 {
   padding-right: 10px;
+}
+
+.padr5 {
+  padding-right: 5px;
 }
 
 .point {

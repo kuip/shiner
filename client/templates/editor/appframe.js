@@ -128,6 +128,9 @@ Template.buttons.helpers({
   },
   pagelinks: function() {
     return Pages.find({app: FlowRouter.getParam('app')}, {fields: {name: 1}}).fetch()
+  },
+  fr: function() {
+    return Session.get('framework')
   }
 })
 

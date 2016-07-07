@@ -18,6 +18,7 @@ ryanswapp:interactjs
 reactive-var
 kadira:flow-router
 kadira:blaze-layout
+meteorhacks:picker
 meteorhacks:fast-render
 dburles:collection-helpers
 u2622:persistent-session

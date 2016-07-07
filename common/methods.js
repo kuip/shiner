@@ -50,6 +50,7 @@ Meteor.methods({
             });
         });
     },
+    // this only does +1 / -1
     moveContainer: function(id,by){
         check(id, String)
         check(by, Number)
@@ -62,13 +63,17 @@ Meteor.methods({
             next = Containers.find({ordering: {$lt: cont.ordering}}, {sort:{ordering:-1}}).fetch()[0]
         }
         if(next) {
-            var ord = next.ordering
-            
-            console.log('cont ordering: '+cont.ordering)
-            console.log('next ordering: '+ord)
+            var ord = next.ordering;
+            console.log('cont ordering: '+cont.ordering + ' - next ordering: ' + ord)
 
-            Containers.update({_id:next._id},{$set:{ordering:cont.ordering}})
-            Containers.update({_id:cont._id},{$set:{ordering:ord}})
+            Containers.update({_id:next._id},{$set:{ordering:cont.ordering}}, function(err, res) {
+                if(err)
+                    throw new Meteor.Error('ordering not updated on prev/next container');
+            });
+            Containers.update({_id:id},{$set:{ordering:ord}}, function(err, res) {
+                if(err)
+                    throw new Meteor.Error('ordering not updated on current container');
+            });
         }
     },
     deleteContainer: function(id){
